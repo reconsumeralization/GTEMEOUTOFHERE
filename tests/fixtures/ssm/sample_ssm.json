@@ -1,0 +1,18 @@
+{
+  "task_id": "permissions_progression_001",
+  "mode": "guided",
+  "attempts": [
+    {
+      "step": 1,
+      "input": "Identify permission change pattern",
+      "hint": "Look at state_before -> state_after for upgrade sequences",
+      "complete": false
+    },
+    {
+      "step": 2,
+      "input": "Map pattern to skill progression",
+      "hint": "Viewer -> Editor represents creation capability gain",
+      "complete": true
+    }
+  ]
+}

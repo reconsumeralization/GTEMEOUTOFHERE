@@ -1,0 +1,4 @@
+# 16_TRADECRAFT_STORIES
+
+## Purpose
+TBD

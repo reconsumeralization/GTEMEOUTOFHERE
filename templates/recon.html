@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="panel">
+    <h2>Recon Lens</h2>
+    <p class="muted">Provider reliability and value exchange health.</p>
+    <form method="get" aria-label="Filter recon by company">
+      <label>
+        Company ID (optional)
+        <input name="company_id" value="{{ company_id or '' }}" placeholder="acme-co" autocomplete="off">
+      </label>
+      <button type="submit">Apply Filter</button>
+    </form>
+  </div>
+
+  <div class="panel">
+    <h3>Stats</h3>
+    {% if stats %}
+      <div class="kpi-grid">
+        <div class="kpi">
+          <strong>{{ stats.get("provider_count", 0) }}</strong>
+          <span>Providers in scope</span>
+        </div>
+        <div class="kpi">
+          <strong>{{ stats.get("error_count", 0) }}</strong>
+          <span>Error events observed</span>
+        </div>
+      </div>
+    {% else %}
+      <p class="muted">No provider activity yet. Run the ingestion pipeline to populate data.</p>
+    {% endif %}
+  </div>
+
+  <div class="panel">
+    <h3>API + Artifacts</h3>
+    <ul>
+      <li><code>/api/v1/recon/providers</code> (supports <code>?company_id=</code>)</li>
+      <li><code>cosurvival_mvp.json</code> → <code>reconsumeralization</code> section</li>
+    </ul>
+  </div>
+{% endblock %}

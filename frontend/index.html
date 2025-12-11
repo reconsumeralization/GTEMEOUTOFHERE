@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>COSURVIVAL Frontend</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      window.__COSURVIVAL_BOOTSTRAP__ = window.__COSURVIVAL_BOOTSTRAP__ || {
+        csrfToken: '{{ csrf_token | default("") }}',
+        currentUser: '{{ user_id | default("anonymous") }}',
+        userRole: '{{ user_role | default("consumer") }}',
+        lastPipelineRun: null
+      };
+    </script>
+  </head>
+  <body class="bg-background-primary text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

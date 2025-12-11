@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scratch for Data | Visual Pipeline Builder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Playful, Scratch-inspired palette */
+            --bg-dark: #1e1e2e;
+            --bg-workspace: #2d2d3d;
+            --bg-toolbox: #252535;
+            
+            /* Block colors by category */
+            --source-color: #4c97ff;
+            --source-dark: #3373cc;
+            --governance-color: #ff8c1a;
+            --governance-dark: #cc6600;
+            --transform-color: #9966ff;
+            --transform-dark: #7744cc;
+            --graph-color: #ffab19;
+            --graph-dark: #cc8800;
+            --extractor-color: #40bf4a;
+            --extractor-dark: #2d9936;
+            --output-color: #ff6680;
+            --output-dark: #cc4455;
+            
+            /* Text */
+            --text-white: #ffffff;
+            --text-light: #ccd6f6;
+            --text-muted: #8892b0;
+            
+            /* Effects */
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --shadow-hover: 0 8px 12px rgba(0, 0, 0, 0.4);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* Layout */
+        .container {
+            display: grid;
+            grid-template-columns: 280px 1fr 320px;
+            grid-template-rows: 60px 1fr 200px;
+            height: 100vh;
+        }
+        
+        /* Header */
+        header {
+            grid-column: 1 / -1;
+            background: var(--bg-toolbox);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            border-bottom: 2px solid var(--extractor-color);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+        }
+        
+        .logo h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-white);
+        }
+        
+        .logo span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 25px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-run {
+            background: var(--extractor-color);
+            color: white;
+        }
+        
+        .btn-run:hover {
+            background: var(--extractor-dark);
+            transform: scale(1.05);
+        }
+        
+        .btn-clear {
+            background: var(--output-color);
+            color: white;
+        }
+        
+        .btn-clear:hover {
+            background: var(--output-dark);
+        }
+        
+        .btn-export {
+            background: var(--source-color);
+            color: white;
+        }
+        
+        /* Toolbox (left sidebar) */
+        .toolbox {
+            background: var(--bg-toolbox);
+            padding: 1rem;
+            overflow-y: auto;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .toolbox h2 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            padding-left: 0.5rem;
+        }
+        
+        .category {
+            margin-bottom: 1.5rem;
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        
+        .category-header.sources { background: var(--source-color); }
+        .category-header.governance { background: var(--governance-color); }
+        .category-header.transforms { background: var(--transform-color); }
+        .category-header.graph { background: var(--graph-color); }
+        .category-header.extractors { background: var(--extractor-color); }
+        .category-header.outputs { background: var(--output-color); }
+        
+        /* Blocks in toolbox */
+        .block {
+            padding: 0.75rem 1rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            cursor: grab;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            box-shadow: var(--shadow);
+            position: relative;
+            user-select: none;
+        }
+        
+        .block:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .block.sources { background: var(--source-color); }
+        .block.governance { background: var(--governance-color); }
+        .block.transforms { background: var(--transform-color); }
+        .block.graph { background: var(--graph-color); }
+        .block.extractors { background: var(--extractor-color); }
+        .block.outputs { background: var(--output-color); }
+        
+        .block::before {
+            content: "";
+            position: absolute;
+            left: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: inherit;
+            filter: brightness(0.8);
+        }
+        
+        .block::after {
+            content: "";
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: inherit;
+            filter: brightness(1.2);
+        }
+        
+        .block-icon {
+            margin-right: 0.5rem;
+        }
+        
+        /* Workspace (center) */
+        .workspace {
+            background: var(--bg-workspace);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .workspace-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+        }
+        
+        .workspace-hint {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+        
+        .workspace-hint.hidden {
+            display: none;
+        }
+        
+        .workspace-hint h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Dropped blocks in workspace */
+        .pipeline-block {
+            position: absolute;
+            padding: 1rem 1.25rem;
+            border-radius: 10px;
+            cursor: move;
+            font-weight: 500;
+            box-shadow: var(--shadow);
+            min-width: 160px;
+            z-index: 10;
+        }
+        
+        .pipeline-block .block-label {
+            font-size: 0.95rem;
+        }
+        
+        .pipeline-block .block-output {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.7);
+            margin-top: 0.25rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .pipeline-block.running {
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { box-shadow: var(--shadow), 0 0 0 0 rgba(64, 191, 74, 0.4); }
+            50% { box-shadow: var(--shadow), 0 0 0 10px rgba(64, 191, 74, 0); }
+        }
+        
+        .pipeline-block.completed {
+            box-shadow: var(--shadow), 0 0 0 3px var(--extractor-color);
+        }
+        
+        .pipeline-block .delete-btn {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--output-color);
+            border: none;
+            color: white;
+            font-size: 0.7rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .pipeline-block:hover .delete-btn {
+            opacity: 1;
+        }
+        
+        /* Connection lines */
+        .connections {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+        
+        .connection-line {
+            stroke: rgba(255,255,255,0.3);
+            stroke-width: 3;
+            fill: none;
+            stroke-dasharray: 5,5;
+            animation: dash 1s linear infinite;
+        }
+        
+        @keyframes dash {
+            to { stroke-dashoffset: -10; }
+        }
+        
+        /* Output Panel (right sidebar) */
+        .output-panel {
+            background: var(--bg-toolbox);
+            padding: 1rem;
+            overflow-y: auto;
+            border-left: 1px solid rgba(255,255,255,0.1);
+            grid-row: 2 / 4;
+        }
+        
+        .output-panel h2 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .output-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .output-card h3 {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .output-card.tribe h3 { color: var(--source-color); }
+        .output-card.teacher h3 { color: var(--extractor-color); }
+        .output-card.recon h3 { color: var(--transform-color); }
+        
+        .output-stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.85rem;
+        }
+        
+        .output-stat:last-child {
+            border-bottom: none;
+        }
+        
+        .output-stat .value {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-white);
+        }
+        
+        /* Console (bottom) */
+        .console {
+            grid-column: 1 / 3;
+            background: #1a1a2e;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            overflow-y: auto;
+        }
+        
+        .console-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-muted);
+        }
+        
+        .console-line {
+            padding: 0.25rem 0;
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .console-line .timestamp {
+            color: var(--text-muted);
+        }
+        
+        .console-line.success { color: var(--extractor-color); }
+        .console-line.info { color: var(--source-color); }
+        .console-line.warning { color: var(--governance-color); }
+        .console-line.error { color: var(--output-color); }
+        
+        /* Lens Toggle */
+        .lens-toggle {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .lens-btn {
+            flex: 1;
+            padding: 0.5rem;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            color: var(--text-muted);
+            font-family: inherit;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .lens-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .lens-btn.active {
+            border-color: currentColor;
+            color: var(--text-white);
+        }
+        
+        .lens-btn.tribe.active { color: var(--source-color); }
+        .lens-btn.teacher.active { color: var(--extractor-color); }
+        .lens-btn.recon.active { color: var(--transform-color); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <span class="logo-icon">🧩</span>
+                <div>
+                    <h1>Scratch for Data</h1>
+                    <span>Visual Pipeline Builder</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-clear" onclick="clearWorkspace()">
+                    <span>🗑️</span> Clear
+                </button>
+                <button class="btn btn-export" onclick="exportPipeline()">
+                    <span>📤</span> Export
+                </button>
+                <button class="btn btn-run" onclick="runPipeline()">
+                    <span>▶️</span> Run Pipeline
+                </button>
+            </div>
+        </header>
+        
+        <!-- Toolbox -->
+        <div class="toolbox">
+            <h2>📦 Blocks</h2>
+            
+            <!-- Sources -->
+            <div class="category">
+                <div class="category-header sources">
+                    <span>📁</span> Sources
+                </div>
+                <div class="block sources" draggable="true" data-type="csv_upload">
+                    <span class="block-icon">📄</span>CSV Upload
+                </div>
+                <div class="block sources" draggable="true" data-type="live_stream">
+                    <span class="block-icon">🔴</span>Live Audit Stream
+                </div>
+                <div class="block sources" draggable="true" data-type="sample_data">
+                    <span class="block-icon">🎲</span>Sample Data
+                </div>
+            </div>
+            
+            <!-- Governance -->
+            <div class="category">
+                <div class="category-header governance">
+                    <span>🔒</span> Governance
+                </div>
+                <div class="block governance" draggable="true" data-type="pii_redaction">
+                    <span class="block-icon">🔐</span>PII Redaction
+                </div>
+                <div class="block governance" draggable="true" data-type="role_filter">
+                    <span class="block-icon">👤</span>Role-based Filter
+                </div>
+                <div class="block governance" draggable="true" data-type="consent_gate">
+                    <span class="block-icon">✅</span>Consent Gate
+                </div>
+                <div class="block governance" draggable="true" data-type="bias_check">
+                    <span class="block-icon">⚖️</span>Bias Check
+                </div>
+            </div>
+            
+            <!-- Transforms -->
+            <div class="category">
+                <div class="category-header transforms">
+                    <span>🔄</span> Transforms
+                </div>
+                <div class="block transforms" draggable="true" data-type="normalize">
+                    <span class="block-icon">📐</span>Normalize Fields
+                </div>
+                <div class="block transforms" draggable="true" data-type="entity_map">
+                    <span class="block-icon">🗺️</span>Map to Entities
+                </div>
+                <div class="block transforms" draggable="true" data-type="time_bucket">
+                    <span class="block-icon">⏰</span>Time Bucketing
+                </div>
+            </div>
+            
+            <!-- Graph -->
+            <div class="category">
+                <div class="category-header graph">
+                    <span>🕸️</span> Graph
+                </div>
+                <div class="block graph" draggable="true" data-type="build_graph">
+                    <span class="block-icon">🌐</span>Build TRIBE Graph
+                </div>
+                <div class="block graph" draggable="true" data-type="weight_edges">
+                    <span class="block-icon">⚡</span>Weight Edges
+                </div>
+                <div class="block graph" draggable="true" data-type="detect_communities">
+                    <span class="block-icon">👥</span>Detect Communities
+                </div>
+            </div>
+            
+            <!-- Extractors -->
+            <div class="category">
+                <div class="category-header extractors">
+                    <span>🎯</span> Extractors
+                </div>
+                <div class="block extractors" draggable="true" data-type="mentor_finder">
+                    <span class="block-icon">🧑‍🏫</span>Mentor Finder
+                </div>
+                <div class="block extractors" draggable="true" data-type="silo_detector">
+                    <span class="block-icon">🏝️</span>Silo Detector
+                </div>
+                <div class="block extractors" draggable="true" data-type="skill_profiler">
+                    <span class="block-icon">📚</span>Skill Profiler
+                </div>
+                <div class="block extractors" draggable="true" data-type="provider_scorer">
+                    <span class="block-icon">⭐</span>Provider Scorer
+                </div>
+            </div>
+            
+            <!-- Outputs -->
+            <div class="category">
+                <div class="category-header outputs">
+                    <span>📊</span> Outputs
+                </div>
+                <div class="block outputs" draggable="true" data-type="dashboard_card">
+                    <span class="block-icon">🎴</span>Dashboard Card
+                </div>
+                <div class="block outputs" draggable="true" data-type="export_json">
+                    <span class="block-icon">📦</span>Export JSON
+                </div>
+                <div class="block outputs" draggable="true" data-type="learning_path">
+                    <span class="block-icon">🛤️</span>Generate Path
+                </div>
+            </div>
+        </div>
+        
+        <!-- Workspace -->
+        <div class="workspace" id="workspace">
+            <div class="workspace-grid"></div>
+            <svg class="connections" id="connections"></svg>
+            <div class="workspace-hint" id="workspace-hint">
+                <h3>🧩 Drag blocks here</h3>
+                <p>Build your data pipeline visually</p>
+            </div>
+        </div>
+        
+        <!-- Output Panel -->
+        <div class="output-panel">
+            <h2><span>🔍</span> Live Output</h2>
+            
+            <!-- Lens Toggle -->
+            <div class="lens-toggle">
+                <button class="lens-btn tribe active" onclick="toggleLens('tribe')">🌐 TRIBE</button>
+                <button class="lens-btn teacher" onclick="toggleLens('teacher')">📚 TEACHER</button>
+                <button class="lens-btn recon" onclick="toggleLens('recon')">💱 RECON</button>
+            </div>
+            
+            <!-- TRIBE Output -->
+            <div class="output-card tribe" id="output-tribe">
+                <h3><span>🌐</span> Network Analysis</h3>
+                <div class="output-stat">
+                    <span>Users</span>
+                    <span class="value" id="tribe-users">--</span>
+                </div>
+                <div class="output-stat">
+                    <span>Communities</span>
+                    <span class="value" id="tribe-communities">--</span>
+                </div>
+                <div class="output-stat">
+                    <span>Bridge Connectors</span>
+                    <span class="value" id="tribe-bridges">--</span>
+                </div>
+                <div class="output-stat">
+                    <span>Mentor Candidates</span>
+                    <span class="value" id="tribe-mentors">--</span>
+                </div>
+            </div>
+            
+            <!-- TEACHER Output -->
+            <div class="output-card teacher" id="output-teacher" style="display:none;">
+                <h3><span>📚</span> Learning Paths</h3>
+                <div class="output-stat">
+                    <span>Roles Detected</span>
+                    <span class="value" id="teacher-roles">--</span>
+                </div>
+                <div class="output-stat">
+                    <span>Skill Progressions</span>
+                    <span class="value" id="teacher-progressions">--</span>
+                </div>
+                <div class="output-stat">
+                    <span>Recommendations</span>
+                    <span class="value" id="teacher-recs">--</span>
+                </div>
+                <div class="output-stat">
+                    <span>Org Skill Gaps</span>
+                    <span class="value" id="teacher-gaps">--</span>
+                </div>
+            </div>
+            
+            <!-- RECON Output -->
+            <div class="output-card recon" id="output-recon" style="display:none;">
+                <h3><span>💱</span> Value Exchange</h3>
+                <div class="output-stat">
+                    <span>Providers Scored</span>
+                    <span class="value" id="recon-providers">--</span>
+                </div>
+                <div class="output-stat">
+                    <span>A-Grade Providers</span>
+                    <span class="value" id="recon-grade-a">--</span>
+                </div>
+                <div class="output-stat">
+                    <span>Value Flows</span>
+                    <span class="value" id="recon-flows">--</span>
+                </div>
+                <div class="output-stat">
+                    <span>Friction Points</span>
+                    <span class="value" id="recon-friction">--</span>
+                </div>
+            </div>
+            
+            <!-- Pipeline Summary -->
+            <div class="output-card">
+                <h3><span>📋</span> Pipeline</h3>
+                <div class="output-stat">
+                    <span>Blocks Used</span>
+                    <span class="value" id="pipeline-blocks">0</span>
+                </div>
+                <div class="output-stat">
+                    <span>Governance ✓</span>
+                    <span class="value" id="pipeline-gov">❌</span>
+                </div>
+                <div class="output-stat">
+                    <span>Status</span>
+                    <span class="value" id="pipeline-status">Ready</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Console -->
+        <div class="console" id="console">
+            <div class="console-header">
+                <span>💻</span> Console
+            </div>
+            <div class="console-line info">
+                <span class="timestamp">[00:00:00]</span>
+                <span>Scratch for Data initialized. Drag blocks to build your pipeline!</span>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Pipeline state
+        let pipelineBlocks = [];
+        let blockCounter = 0;
+        let currentLens = 'tribe';
+        
+        // Block type metadata
+        const blockMeta = {
+            // Sources
+            csv_upload: { category: 'sources', label: 'CSV Upload', output: 'raw_data', icon: '📄' },
+            live_stream: { category: 'sources', label: 'Live Stream', output: 'stream_data', icon: '🔴' },
+            sample_data: { category: 'sources', label: 'Sample Data', output: 'sample_data', icon: '🎲' },
+            
+            // Governance
+            pii_redaction: { category: 'governance', label: 'PII Redaction', output: 'safe_data', icon: '🔐' },
+            role_filter: { category: 'governance', label: 'Role Filter', output: 'filtered_data', icon: '👤' },
+            consent_gate: { category: 'governance', label: 'Consent Gate', output: 'consented_data', icon: '✅' },
+            bias_check: { category: 'governance', label: 'Bias Check', output: 'bias_checked', icon: '⚖️' },
+            
+            // Transforms
+            normalize: { category: 'transforms', label: 'Normalize', output: 'normalized', icon: '📐' },
+            entity_map: { category: 'transforms', label: 'Entity Map', output: 'entities', icon: '🗺️' },
+            time_bucket: { category: 'transforms', label: 'Time Bucket', output: 'bucketed', icon: '⏰' },
+            
+            // Graph
+            build_graph: { category: 'graph', label: 'Build Graph', output: 'graph', icon: '🌐' },
+            weight_edges: { category: 'graph', label: 'Weight Edges', output: 'weighted_graph', icon: '⚡' },
+            detect_communities: { category: 'graph', label: 'Communities', output: 'communities', icon: '👥' },
+            
+            // Extractors
+            mentor_finder: { category: 'extractors', label: 'Mentor Finder', output: 'mentors', icon: '🧑‍🏫' },
+            silo_detector: { category: 'extractors', label: 'Silo Detector', output: 'silos', icon: '🏝️' },
+            skill_profiler: { category: 'extractors', label: 'Skill Profiler', output: 'skills', icon: '📚' },
+            provider_scorer: { category: 'extractors', label: 'Provider Score', output: 'scores', icon: '⭐' },
+            
+            // Outputs
+            dashboard_card: { category: 'outputs', label: 'Dashboard', output: 'dashboard', icon: '🎴' },
+            export_json: { category: 'outputs', label: 'Export JSON', output: 'json_file', icon: '📦' },
+            learning_path: { category: 'outputs', label: 'Learning Path', output: 'path', icon: '🛤️' },
+        };
+        
+        // Initialize drag and drop
+        document.querySelectorAll('.block').forEach(block => {
+            block.addEventListener('dragstart', handleDragStart);
+        });
+        
+        const workspace = document.getElementById('workspace');
+        workspace.addEventListener('dragover', handleDragOver);
+        workspace.addEventListener('drop', handleDrop);
+        
+        function handleDragStart(e) {
+            e.dataTransfer.setData('text/plain', e.target.dataset.type);
+            e.dataTransfer.effectAllowed = 'copy';
+        }
+        
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'copy';
+        }
+        
+        function handleDrop(e) {
+            e.preventDefault();
+            const blockType = e.dataTransfer.getData('text/plain');
+            const meta = blockMeta[blockType];
+            
+            if (!meta) return;
+            
+            // Calculate position
+            const rect = workspace.getBoundingClientRect();
+            const x = e.clientX - rect.left - 80;
+            const y = e.clientY - rect.top - 25;
+            
+            // Create block
+            createPipelineBlock(blockType, meta, x, y);
+            
+            // Hide hint
+            document.getElementById('workspace-hint').classList.add('hidden');
+        }
+        
+        function createPipelineBlock(type, meta, x, y) {
+            const id = `block_${blockCounter++}`;
+            
+            const block = document.createElement('div');
+            block.className = `pipeline-block ${meta.category}`;
+            block.id = id;
+            block.style.left = `${x}px`;
+            block.style.top = `${y}px`;
+            block.innerHTML = `
+                <div class="block-label">${meta.icon} ${meta.label}</div>
+                <div class="block-output">→ ${meta.output}</div>
+                <button class="delete-btn" onclick="deleteBlock('${id}')">×</button>
+            `;
+            
+            // Make draggable within workspace
+            makeDraggable(block);
+            
+            workspace.appendChild(block);
+            
+            pipelineBlocks.push({ id, type, meta, x, y });
+            updatePipelineStats();
+            logMessage('info', `Added: ${meta.label}`);
+            
+            // Draw connections
+            drawConnections();
+        }
+        
+        function makeDraggable(element) {
+            let isDragging = false;
+            let startX, startY;
+            
+            element.addEventListener('mousedown', (e) => {
+                if (e.target.classList.contains('delete-btn')) return;
+                isDragging = true;
+                startX = e.clientX - element.offsetLeft;
+                startY = e.clientY - element.offsetTop;
+                element.style.zIndex = 100;
+            });
+            
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                element.style.left = `${e.clientX - startX}px`;
+                element.style.top = `${e.clientY - startY}px`;
+                drawConnections();
+            });
+            
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+                element.style.zIndex = 10;
+            });
+        }
+        
+        function deleteBlock(id) {
+            const element = document.getElementById(id);
+            if (element) element.remove();
+            pipelineBlocks = pipelineBlocks.filter(b => b.id !== id);
+            updatePipelineStats();
+            drawConnections();
+            logMessage('warning', 'Block removed');
+            
+            if (pipelineBlocks.length === 0) {
+                document.getElementById('workspace-hint').classList.remove('hidden');
+            }
+        }
+        
+        function drawConnections() {
+            const svg = document.getElementById('connections');
+            svg.innerHTML = '';
+            
+            // Sort blocks by x position to determine flow
+            const sorted = [...pipelineBlocks].sort((a, b) => {
+                const elA = document.getElementById(a.id);
+                const elB = document.getElementById(b.id);
+                return (elA?.offsetLeft || 0) - (elB?.offsetLeft || 0);
+            });
+            
+            // Draw lines between consecutive blocks
+            for (let i = 0; i < sorted.length - 1; i++) {
+                const current = document.getElementById(sorted[i].id);
+                const next = document.getElementById(sorted[i + 1].id);
+                
+                if (!current || !next) continue;
+                
+                const x1 = current.offsetLeft + current.offsetWidth;
+                const y1 = current.offsetTop + current.offsetHeight / 2;
+                const x2 = next.offsetLeft;
+                const y2 = next.offsetTop + next.offsetHeight / 2;
+                
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                const midX = (x1 + x2) / 2;
+                path.setAttribute('d', `M ${x1} ${y1} C ${midX} ${y1}, ${midX} ${y2}, ${x2} ${y2}`);
+                path.setAttribute('class', 'connection-line');
+                svg.appendChild(path);
+            }
+        }
+        
+        function updatePipelineStats() {
+            document.getElementById('pipeline-blocks').textContent = pipelineBlocks.length;
+            
+            // Check if governance block is present
+            const hasGov = pipelineBlocks.some(b => b.meta.category === 'governance');
+            document.getElementById('pipeline-gov').textContent = hasGov ? '✅' : '❌';
+        }
+        
+        function toggleLens(lens) {
+            currentLens = lens;
+            
+            // Update buttons
+            document.querySelectorAll('.lens-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.classList.contains(lens)) btn.classList.add('active');
+            });
+            
+            // Show/hide output cards
+            document.getElementById('output-tribe').style.display = lens === 'tribe' ? 'block' : 'none';
+            document.getElementById('output-teacher').style.display = lens === 'teacher' ? 'block' : 'none';
+            document.getElementById('output-recon').style.display = lens === 'recon' ? 'block' : 'none';
+        }
+        
+        function logMessage(type, message) {
+            const console = document.getElementById('console');
+            const time = new Date().toLocaleTimeString();
+            const line = document.createElement('div');
+            line.className = `console-line ${type}`;
+            line.innerHTML = `<span class="timestamp">[${time}]</span><span>${message}</span>`;
+            console.appendChild(line);
+            console.scrollTop = console.scrollHeight;
+        }
+        
+        function clearWorkspace() {
+            pipelineBlocks.forEach(b => {
+                const el = document.getElementById(b.id);
+                if (el) el.remove();
+            });
+            pipelineBlocks = [];
+            updatePipelineStats();
+            drawConnections();
+            document.getElementById('workspace-hint').classList.remove('hidden');
+            logMessage('warning', 'Workspace cleared');
+        }
+        
+        async function runPipeline() {
+            if (pipelineBlocks.length === 0) {
+                logMessage('error', 'No blocks in pipeline!');
+                return;
+            }
+            
+            // Check for governance
+            const hasGov = pipelineBlocks.some(b => b.meta.category === 'governance');
+            if (!hasGov) {
+                logMessage('warning', '⚠️ Running without governance block - consider adding PII Redaction');
+            }
+            
+            document.getElementById('pipeline-status').textContent = 'Running...';
+            logMessage('info', '▶️ Starting pipeline execution...');
+            
+            // Animate blocks
+            const sorted = [...pipelineBlocks].sort((a, b) => {
+                const elA = document.getElementById(a.id);
+                const elB = document.getElementById(b.id);
+                return (elA?.offsetLeft || 0) - (elB?.offsetLeft || 0);
+            });
+            
+            for (const block of sorted) {
+                const el = document.getElementById(block.id);
+                if (el) {
+                    el.classList.add('running');
+                    logMessage('info', `Processing: ${block.meta.label}...`);
+                    await sleep(800);
+                    el.classList.remove('running');
+                    el.classList.add('completed');
+                }
+            }
+            
+            // Simulate results
+            simulateResults();
+            
+            document.getElementById('pipeline-status').textContent = 'Completed';
+            logMessage('success', '✅ Pipeline completed successfully!');
+        }
+        
+        function simulateResults() {
+            // Simulate TRIBE results
+            const users = Math.floor(Math.random() * 500) + 100;
+            document.getElementById('tribe-users').textContent = users;
+            document.getElementById('tribe-communities').textContent = Math.floor(users / 50);
+            document.getElementById('tribe-bridges').textContent = Math.floor(users / 80);
+            document.getElementById('tribe-mentors').textContent = Math.floor(users / 60);
+            
+            // Simulate TEACHER results
+            document.getElementById('teacher-roles').textContent = Math.floor(Math.random() * 20) + 5;
+            document.getElementById('teacher-progressions').textContent = Math.floor(Math.random() * 50) + 10;
+            document.getElementById('teacher-recs').textContent = Math.floor(Math.random() * 100) + 20;
+            document.getElementById('teacher-gaps').textContent = Math.floor(Math.random() * 10) + 2;
+            
+            // Simulate RECON results
+            const providers = Math.floor(Math.random() * 30) + 5;
+            document.getElementById('recon-providers').textContent = providers;
+            document.getElementById('recon-grade-a').textContent = Math.floor(providers * 0.3);
+            document.getElementById('recon-flows').textContent = Math.floor(Math.random() * 50) + 10;
+            document.getElementById('recon-friction').textContent = Math.floor(Math.random() * 10) + 1;
+        }
+        
+        function exportPipeline() {
+            const pipeline = {
+                version: '1.0',
+                created: new Date().toISOString(),
+                blocks: pipelineBlocks.map(b => ({
+                    type: b.type,
+                    label: b.meta.label,
+                    category: b.meta.category,
+                    output: b.meta.output
+                }))
+            };
+            
+            const json = JSON.stringify(pipeline, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'cosurvival_pipeline.json';
+            a.click();
+            
+            URL.revokeObjectURL(url);
+            logMessage('success', '📦 Pipeline exported to JSON');
+        }
+        
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+    </script>
+</body>
+</html>
+

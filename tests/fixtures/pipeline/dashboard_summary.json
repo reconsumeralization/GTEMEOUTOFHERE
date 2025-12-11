@@ -1,0 +1,53 @@
+{
+  "overview": {
+    "users": 120,
+    "companies": 5,
+    "groups": 9,
+    "providers": 4
+  },
+  "tribe_highlights": {
+    "communities": 6,
+    "network_density": 0.12,
+    "bridge_connectors": 3,
+    "mentor_candidates": 7,
+    "top_collaborations": [
+      {
+        "company_1": "company_a",
+        "company_2": "company_b",
+        "collaboration_strength": 24
+      }
+    ]
+  },
+  "teacher_highlights": {
+    "roles": 8,
+    "progressions": 12,
+    "recommendations": 18,
+    "top_progression": {
+      "from_state": "viewer",
+      "to_state": "editor",
+      "frequency": 14,
+      "avg_time_days": 6.5,
+      "common_in_roles": ["analyst", "designer"]
+    },
+    "orgs_with_gaps": 2
+  },
+  "recon_highlights": {
+    "providers_scored": 4,
+    "top_providers": ["provider_aws", "provider_gcp"],
+    "needing_attention": ["provider_small"],
+    "friction_points": 2,
+    "total_value": 320
+  },
+  "governance": {
+    "passed": true,
+    "risk_flags": [],
+    "review_required": false
+  },
+  "insights": [
+    {
+      "type": "mentorship_opportunity",
+      "description": "User entity_ab12... could help address skill gaps",
+      "priority": "medium"
+    }
+  ]
+}

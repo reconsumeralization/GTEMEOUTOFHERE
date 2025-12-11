@@ -1,0 +1,38 @@
+# COSURVIVAL Data Processing Requirements
+# ==========================================
+
+# Core data processing
+pandas==2.2.2
+numpy==2.1.3
+
+# Web + security
+flask==3.0.3
+flask-wtf==1.2.1
+markupsafe==2.1.5
+cryptography==42.0.8
+
+# Network analysis
+networkx==3.3
+
+# Data export (Parquet support)
+pyarrow==16.1.0
+
+# Testing
+pytest==8.3.3
+
+# Optional: Advanced community detection
+# python-louvain>=0.16  # Uncomment for Louvain algorithm
+
+# Optional: API server (if deploying as service)
+# fastapi>=0.100.0
+# uvicorn>=0.22.0
+
+# Optional: Database support
+# sqlalchemy>=2.0.0
+
+# Optional: Visualization (Python-side)
+# plotly>=5.15.0
+# pyvis>=0.3.2
+
+# Code formatting
+black>=23.0.0

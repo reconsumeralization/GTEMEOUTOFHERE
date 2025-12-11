@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="panel">
+    <h2>Pipeline Overview</h2>
+    <p class="muted">Governance → Ingestion → MVP Extraction → Dashboard. Use this shell to navigate lens-specific summaries and API endpoints.</p>
+    <div class="kpi-grid">
+      <div class="kpi">
+        <strong>Tribe</strong>
+        <span>Network graph + community/bridge highlights</span>
+        <small class="muted">GET /api/v1/tribe/graph</small>
+      </div>
+      <div class="kpi">
+        <strong>Teacher</strong>
+        <span>Role pathways + recommendations</span>
+        <small class="muted">GET /api/v1/teacher/recommendations</small>
+      </div>
+      <div class="kpi">
+        <strong>Recon</strong>
+        <span>Provider reliability and value flows</span>
+        <small class="muted">GET /api/v1/recon/providers</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>What to do next</h3>
+    <ul>
+      <li>Run <code>python pipeline.py path/to/activity.csv ./output</code> to generate artifacts.</li>
+      <li>Serve <code>dashboard.html</code> alongside the generated JSON for D3 visualizations.</li>
+      <li>Use the lens pages to filter by company or user and verify aggregated insights.</li>
+    </ul>
+  </div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{
+  "providers": [
+    {
+      "provider_id": "provider_aws",
+      "reliability": 0.97,
+      "grade": "B",
+      "total_activities": 120,
+      "error_count": 4
+    },
+    {
+      "provider_id": "provider_gcp",
+      "reliability": 0.992,
+      "grade": "A",
+      "total_activities": 95,
+      "error_count": 1
+    }
+  ],
+  "friction_points": [
+    {
+      "provider_id": "provider_small",
+      "consumer_id": "company_123",
+      "volume": 6,
+      "quality_score": 0.82,
+      "friction_reason": "Low engagement"
+    }
+  ]
+}

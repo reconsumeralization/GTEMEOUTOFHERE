@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="panel">
+    <h2>Query Results</h2>
+    {% if result %}
+      <table aria-label="Query result details">
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for key, value in result.items() %}
+            <tr>
+              <td>{{ key }}</td>
+              <td>{{ value }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="muted">No result found for this query.</p>
+    {% endif %}
+  </div>
+{% endblock %}

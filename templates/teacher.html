@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="panel">
+    <h2>Teacher Lens</h2>
+    <p class="muted">Role pathways, skill progressions, and recommendations.</p>
+    <form method="get" aria-label="Filter teacher by user">
+      <label>
+        User ID (optional)
+        <input name="user_id" value="{{ user_id or '' }}" placeholder="user_123" autocomplete="off">
+      </label>
+      <button type="submit">Load Stats</button>
+    </form>
+  </div>
+
+  <div class="panel">
+    <h3>Stats</h3>
+    {% if stats %}
+      <div class="kpi-grid">
+        <div class="kpi">
+          <strong>{{ stats.get("progression_count", 0) }}</strong>
+          <span>Permission changes tracked</span>
+        </div>
+      </div>
+    {% else %}
+      <p class="muted">No user selected or no progression data found.</p>
+    {% endif %}
+  </div>
+
+  <div class="panel">
+    <h3>API + Artifacts</h3>
+    <ul>
+      <li><code>/api/v1/teacher/recommendations?user_id=&lt;id&gt;</code></li>
+      <li><code>cosurvival_mvp.json</code> → <code>teacher</code> section</li>
+    </ul>
+  </div>
+{% endblock %}

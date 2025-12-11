@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="panel">
+    <h2>Query Lab</h2>
+    <p class="muted">Submit a lens-specific query. Inputs are validated server-side and logged for auditability.</p>
+    <form method="post">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label>
+        User ID
+        <input name="user_id" placeholder="user_123" required autocomplete="off">
+      </label>
+      <label>
+        Lens
+        <select name="lens" required>
+          <option value="tribe">Tribe</option>
+          <option value="teacher">Teacher</option>
+          <option value="recon">Recon</option>
+        </select>
+      </label>
+      <button type="submit">Submit Query</button>
+    </form>
+  </div>
+{% endblock %}
