@@ -414,9 +414,17 @@ class AuditLogger:
    - Over-broad permissions
    - Missing blast radius controls
 
+6. **AI-Generated Code Supply Chain**
+   - AI-generated code without human verification
+   - Unclear code provenance
+   - AI-managed dependencies
+   - Automated PR management without security review
+   - AI-generated vulnerabilities
+
 **CURRICULUM: Week 10 - Security Module**
 - Threat modeling activity
 - See: `TEACHER_CORE_TRACK.md`, Week 10
+- See: `curriculum/case_studies/A_SWE_ANALYSIS.md` - AI-generated code security
 
 ---
 
@@ -429,6 +437,7 @@ class AuditLogger:
 | Credential Exfil | Secure storage, rotation | Access anomaly detection | Rotate, revoke |
 | Supply Chain | SBOM, signatures | Dependency scanning | Quarantine, update |
 | Cross-Domain Pivot | Segmentation, deny-by-default | Access logging | Isolate, investigate |
+| AI-Generated Code | Human review required, governance gate | AI decision audit trails | Quarantine, human verification |
 
 **CURRICULUM: Week 10 - Security Module**
 - Controls implementation
@@ -450,6 +459,119 @@ Security and Trust & Safety are one joined discipline:
 - Unified approach to human and technical safety
 - See: `TEACHER_CORE_TRACK.md`, Week 0, Activity 0.4
 - See: `TEACHER_ETHICAL_GUARDRAILS.md`
+
+---
+
+## Real-World Case Study: Jaguar Land Rover's Cybersecurity Gamble
+
+**CURRICULUM: Week 10 - Security Module**  
+**See:** `curriculum/core/TEACHER_WEEK10.md` - Real-World Case Study section
+
+### The Context
+
+Jaguar Land Rover (JLR), a flagship British manufacturer, demonstrates what happens when security is treated as an IT problem rather than a business risk, and when foundational controls are ignored despite:
+- Years of well-documented best practices
+- A recent cyber incident that disrupted operations and cost billions
+- A UK Government loan intended to support recovery
+
+### The Failures
+
+**1. TLS/SSL Configuration Failures**
+- Basic failures in TLS/SSL configuration remain unresolved
+- Inconsistent HTTP/HTTPS enforcement across digital assets
+- These are foundational controls, not cutting-edge issues
+
+**2. DNS/DNSSEC Weaknesses**
+- Unsecured DNS infrastructure
+- Inconsistent DNSSEC deployment
+- Core DNS zones remain vulnerable
+
+**3. Governance Failures**
+- Security treated as IT problem, not business risk
+- Reactive response to incidents rather than structural reform
+- Government funding used as "sticking plaster" over systemic issues
+
+### The Impact
+
+**Direct Consequences:**
+- Traffic interception risks
+- Brand impersonation vulnerabilities
+- Customer, partner, and supplier exposure
+- Operational disruption costing billions
+
+**Systemic Consequences:**
+- Undermined confidence in flagship manufacturer
+- Supply chain disruption
+- Economic impact beyond JLR's balance sheet
+
+### COSURVIVAL Trust Fabric Analysis
+
+**What JLR Did Wrong (Anti-Patterns):**
+
+1. **Security as IT Problem, Not Business Risk**
+   - **JLR:** Security isolated from business decisions
+   - **COSURVIVAL:** Security woven into architecture, governance, and business decisions (Week 0, Week 10)
+
+2. **Reactive vs. Proactive Security**
+   - **JLR:** Fix after incident
+   - **COSURVIVAL:** Governance gate prevents issues before they become incidents (Week 0)
+
+3. **Foundational Controls Ignored**
+   - **JLR:** TLS/SSL, DNS/DNSSEC failures
+   - **COSURVIVAL:** All foundational controls implemented from start (Week 10)
+
+4. **Governance Debt**
+   - **JLR:** Funding masks lack of governance
+   - **COSURVIVAL:** Governance gate before any processing (Week 0)
+
+### How COSURVIVAL Trust Fabric Prevents These Failures
+
+**1. Security by Design (Not Bolt-On)**
+- Governance gate prevents processing without security checks (Week 0)
+- Security woven into architecture, not bolted on
+- Foundational controls (TLS, DNS, encryption) from day one (Week 10)
+
+**2. Business Risk, Not IT Problem**
+- Security failures = business failures
+- Supply chain impact considered
+- Trust as strategic asset, not technical detail
+
+**3. Proactive Governance**
+- Governance gate prevents issues (Week 0)
+- Security audit logging throughout
+- Supply chain security (SBOM, signatures, provenance)
+
+**4. Trust as Supply Chain Problem**
+- **Code integrity:** Signed artifacts, SBOM (Week 10)
+- **Data integrity:** Provenance, tamper-evident logs (Week 0, Week 10)
+- **Identity integrity:** Verified identities, least privilege (Week 10)
+- **Human integrity:** Anti-manipulation, transparency (Week 0, Week 10)
+
+### Key Lessons for COSURVIVAL
+
+1. **Security is not optional.** Foundational controls (TLS, DNS, encryption) are required, not "nice to have."
+
+2. **Security is a business risk, not an IT problem.** Failures impact operations, supply chains, and economic stability.
+
+3. **Reactive security fails.** Governance must be proactive—prevent issues before they become incidents.
+
+4. **Funding doesn't fix governance.** Money alone cannot solve structural security failures.
+
+5. **Trust is strategic.** In an era where trust is digital and resilience is strategic, security weaknesses undermine confidence.
+
+### COSURVIVAL Trust Fabric Principles Applied
+
+| JLR Failure | COSURVIVAL Prevention | Implementation |
+|-------------|----------------------|----------------|
+| TLS/SSL failures | HTTPS enforcement, TLS validation | Week 10 - Foundational controls |
+| DNS/DNSSEC weaknesses | DNSSEC validation, DNS security | Week 10 - Foundational controls |
+| Security as IT problem | Security as business risk | Week 0 - Governance gate, Week 10 - Business impact |
+| Reactive security | Proactive governance | Week 0 - Governance gate, Week 10 - Security audit logging |
+| Governance debt | Governance gate | Week 0 - Governance gate before processing |
+
+**CURRICULUM: Week 10 - Security Module**
+- Activity 10.6: Analyzing Real-World Security Failures (JLR Case Study)
+- See: `curriculum/core/TEACHER_WEEK10.md` - Activity 10.6
 
 ---
 

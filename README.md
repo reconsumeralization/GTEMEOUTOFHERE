@@ -33,6 +33,7 @@ Quick setup and SBOM steps: see `docs/START_HERE.md`.
 - 📜 Thesis & PRD map: `curriculum/vision/TEACHER_THESIS_INDEX.md` + `curriculum/guides/TEACHER_THESIS_PRD_MAP.md`
 - 🗂️ Unified PRD: `PRD_UNIFIED_ECOSYSTEM.md`
 - ✅ Ethics bundle: `ethics/TEACHER_ETHICAL_GUARDRAILS.md`, `ethics/ETHICAL_CHECKLIST.md`, `ethics/ETHICS_INTEGRATION_SUMMARY.md`, `ethics/MODEL_WELFARE_AND_INTERACTION_NORMS.md`, `curriculum/vision/appendices/C_MAS_CHECKLIST.md`, `curriculum/vision/appendices/A_NON_NEGOTIABLES.md`
+- 📚 Case studies: `CASE_STUDIES_INDEX.md` (JLR, A-SWE) + `CASE_STUDY_INTEGRATION_PROCESS.md`
 
 ---
 

@@ -799,6 +799,410 @@ def get_encrypted_db():
 
 ---
 
+## Activity 10.4: Forwards and Backwards in Time (Temporal Inversion)
+
+**Time:** 40 minutes
+
+**Learning Objective:** Understand that patterns work both directions in time (forwards = predictive, backwards = retrospective)
+
+**Context:** Just as Dirac's negative energy backwards in time = positive energy forwards in time, security analysis works both directions.
+
+**Activity Steps:**
+
+1. **Forwards (Predictive):** "If X happens, Y will likely follow"
+   ```python
+   # Predictive security pattern
+   def predict_security_risk(user_id: str, data: Dict) -> Dict:
+       """Predict future security risks."""
+       if user_gains_admin_privileges(user_id, data):
+           return {
+               "likely_outcome": "will_access_sensitive_data",
+               "confidence": 0.75,
+               "recommendation": "Monitor access patterns"
+           }
+   ```
+
+2. **Backwards (Retrospective):** "Y happened, so X likely preceded it"
+   ```python
+   # Retrospective security analysis
+   def explain_security_incident(outcome: str, data: Dict) -> Dict:
+       """Work backwards from outcome to find causes."""
+       if outcome == "sensitive_data_accessed":
+           causes = find_privilege_escalation(data, timestamp - 2_days)
+           return {
+               "likely_cause": "admin_privileges_gained_recently",
+               "confidence": 0.80,
+               "evidence": causes,
+               "recommendation": "Review privilege changes"
+           }
+   ```
+
+3. **Show how both directions reveal truth:**
+   - Forwards: Predicts future security risks
+   - Backwards: Explains past security incidents
+   - Both: Confirm the same security pattern
+
+**Example:**
+```
+Forwards: "If user gains admin → will access sensitive data"
+Backwards: "User accessed sensitive data → likely gained admin recently"
+Unified: "Both directions confirm the security risk pattern"
+```
+
+**Implementation Task:**
+
+Write code that:
+1. **Predicts forwards:** Given a privilege escalation, predict likely outcomes
+2. **Explains backwards:** Given a security incident, trace back to likely causes
+3. **Unifies both:** Show how forwards and backwards analysis confirm the same pattern
+
+**Cost-Benefit Analysis Template:**
+
+```python
+def calculate_security_roi(
+    proactive_investment: float,
+    reactive_cost: float,
+    incident_probability: float = 0.5
+) -> Dict[str, Any]:
+    """
+    Calculate ROI of proactive vs. reactive security.
+    
+    CURRICULUM: Week 10, Activity 10.6
+    Based on JLR case study lessons.
+    """
+    # Expected cost of reactive approach
+    expected_reactive_cost = reactive_cost * incident_probability
+    
+    # Net benefit of proactive approach
+    net_benefit = expected_reactive_cost - proactive_investment
+    
+    # ROI calculation
+    roi = (net_benefit / proactive_investment) * 100 if proactive_investment > 0 else 0
+    
+    return {
+        "proactive_investment": proactive_investment,
+        "reactive_cost": reactive_cost,
+        "incident_probability": incident_probability,
+        "expected_reactive_cost": expected_reactive_cost,
+        "net_benefit": net_benefit,
+        "roi_percent": roi,
+        "recommendation": "Proactive" if net_benefit > 0 else "Reactive",
+        "jlr_lesson": "JLR's reactive costs (billions) far exceeded proactive investment (<1%)"
+    }
+
+# Example: JLR scenario
+jlr_analysis = calculate_security_roi(
+    proactive_investment=10_000_000,  # £10M for foundational controls
+    reactive_cost=2_000_000_000,      # £2B in actual costs
+    incident_probability=1.0           # Incident occurred
+)
+# Result: ROI = 19,900% (proactive investment pays for itself 200x over)
+```
+
+**Example Code:**
+```python
+def analyze_temporal_inversion(data: Dict, outcome: str) -> Dict:
+    """
+    Work backwards from outcomes to find causes.
+    
+    Like Dirac's negative energy = antiparticle backwards in time,
+    we work backwards from outcomes to reveal hidden patterns.
+    """
+    # Start with outcome
+    outcome_patterns = find_patterns_leading_to_outcome(data, outcome)
+    
+    # Work backwards to find causes
+    causal_chain = []
+    current = outcome
+    
+    max_depth = 5
+    depth = 0
+    while depth < max_depth:
+        causes = find_causes(data, current)
+        if not causes:
+            break
+        causal_chain.append({
+            "effect": current,
+            "causes": causes,
+            "depth": depth
+        })
+        current = causes[0] if causes else None
+        if not current:
+            break
+        depth += 1
+    
+    return {
+        "outcome": outcome,
+        "causal_chain": causal_chain,
+        "root_causes": causal_chain[-1]["causes"] if causal_chain else [],
+        "temporal_direction": "backwards",
+        "insight": "Working backwards from outcome reveals the causal chain that led to it."
+    }
+```
+
+**Key Insight:** Security analysis works both forwards (predictive) and backwards (retrospective), just as Dirac's equation works in both temporal directions.
+
+**CURRICULUM REFERENCE:**
+- See: `curriculum/vision/chapters/DIrac_ANTIPATTERNS_APPLICATION.md`
+- Builds on: All previous Dirac activities (0.5, 1.4, 4.3)
+
+**Success Criteria:**
+- [ ] Can write predictive analysis (forwards)
+- [ ] Can write retrospective analysis (backwards)
+- [ ] Can show how both directions reveal truth
+- [ ] Can apply to security anomaly detection
+
+---
+
+## Activity 10.5: Consciousness Cannot Be Detected (Dr. K-Inspired)
+
+**Time:** 35 minutes
+
+**Learning Objective:** Understand that user experience cannot be detected, only reported
+
+**Context:** Just as Dr. K explains consciousness cannot be detected (only reported), user experience cannot be measured directly.
+
+**Activity Steps:**
+
+1. **Distinguish what can be detected vs. what must be reported:**
+   - **Can detect**: Activity patterns, collaboration counts, skill progressions
+   - **Cannot detect**: How user feels, what it means, whether it's meaningful
+   - **Must rely on**: User reports of subjective experience
+
+2. **Design systems that respect this:**
+   - Never claim to know user's experience
+   - Always acknowledge: "I can see patterns, but I cannot know your experience"
+   - Ask for user reports: "How does this feel? What does this mean to you?"
+
+3. **Apply to security:**
+   - Can detect: Access patterns, privilege changes
+   - Cannot detect: User's intent, whether access was appropriate
+   - Must rely on: User reports, context, human judgment
+
+**Example:**
+```
+Can Detect: "User accessed sensitive data"
+Cannot Detect: "User's intent or whether it was appropriate"
+Must Rely On: User explanation, context, human review
+
+System Response: "I can detect: You accessed sensitive data after gaining admin privileges.
+I cannot detect: Your intent or whether this was appropriate.
+I need you to report: What was your purpose? Was this authorized?"
+```
+
+**Implementation:**
+```python
+def acknowledge_limitations(pattern: PatternSignal) -> Dict[str, Any]:
+    """
+    Acknowledge what we can and cannot detect.
+    
+    Like Dr. K: "I could be a bot. You have no idea if I have thoughts."
+    """
+    return {
+        "can_detect": [
+            "Activity patterns",
+            "Collaboration counts",
+            "Skill progressions",
+            "Access patterns"
+        ],
+        "cannot_detect": [
+            "How you feel",
+            "What it means to you",
+            "Whether it's meaningful",
+            "Your intent",
+            "Your experience"
+        ],
+        "must_rely_on": [
+            "Your reports of experience",
+            "Your explanations",
+            "Your context",
+            "Human judgment"
+        ],
+        "acknowledgment": "I can see patterns, but I cannot know your experience. I need you to tell me."
+    }
+```
+
+**Key Insight:** We can detect patterns, but not experience. Always acknowledge limitations and ask for user input.
+
+**CURRICULUM REFERENCE:**
+- See: `curriculum/vision/chapters/DR_K_CONSCIOUSNESS_APPLICATION.md`
+- Builds on: Activity 0.6, 1.5, 4.4
+
+**Success Criteria:**
+- [ ] Can distinguish what can be detected vs. what must be reported
+- [ ] Can acknowledge limitations in system responses
+- [ ] Can design systems that ask for user reports
+- [ ] Can apply to security (intent cannot be detected)
+
+---
+
+## Activity 10.6: Analyzing Real-World Security Failures (JLR Case Study)
+
+**Time:** 60 minutes
+
+**Learning Objective:** Apply COSURVIVAL security principles to analyze and prevent real-world security failures
+
+**Context:** Jaguar Land Rover's cybersecurity failures demonstrate what happens when security is treated as an IT problem rather than a business risk, and when foundational controls are ignored.
+
+**Activity Steps:**
+
+1. **Identify the Failures:**
+   - TLS/SSL configuration failures
+   - DNS/DNSSEC weaknesses
+   - Governance failures
+   - Reactive vs. proactive security
+
+2. **Map to COSURVIVAL Principles:**
+   - Which COSURVIVAL principles would have prevented each failure?
+   - How does COSURVIVAL's governance gate address these issues?
+   - What foundational controls does COSURVIVAL implement that JLR missed?
+
+3. **Analyze the Impact:**
+   - Direct consequences (traffic interception, brand impersonation)
+   - Systemic consequences (supply chain disruption, economic impact)
+   - Trust erosion (confidence in flagship manufacturer)
+
+4. **Generate Recommendations:**
+   - What would proactive governance have prevented?
+   - How can security be treated as a business risk?
+   - What foundational controls must be implemented?
+
+**Implementation Task:**
+
+```python
+def analyze_jlr_failures() -> Dict[str, Any]:
+    """
+    Analyze JLR's security failures using COSURVIVAL principles.
+    
+    CURRICULUM: Week 10, Activity 10.6
+    """
+    # JLR's failures
+    jlr_failures = {
+        "tls_ssl": {
+            "issue": "Basic failures in TLS/SSL configuration",
+            "impact": "Traffic interception, man-in-the-middle attacks",
+            "cosurvival_solution": "Week 10 - HTTPS enforcement, TLS validation"
+        },
+        "dns_dnssec": {
+            "issue": "Unsecured DNS infrastructure, inconsistent DNSSEC",
+            "impact": "DNS hijacking, brand impersonation",
+            "cosurvival_solution": "Week 10 - DNSSEC validation, DNS security"
+        },
+        "governance": {
+            "issue": "Security as IT problem, not business risk",
+            "impact": "Reactive response, systemic failures",
+            "cosurvival_solution": "Week 0 - Governance gate, security by design"
+        },
+        "reactive": {
+            "issue": "Reactive security after incidents",
+            "impact": "Billions in costs, operational disruption",
+            "cosurvival_solution": "Week 0 - Proactive governance, prevent before incident"
+        }
+    }
+    
+    # COSURVIVAL principles that prevent these
+    cosurvival_principles = {
+        "security_by_design": {
+            "principle": "Security woven into architecture, not bolted on",
+            "prevents": ["tls_ssl", "dns_dnssec", "governance"],
+            "implementation": "Week 0 (governance gate), Week 10 (foundational controls)"
+        },
+        "business_risk": {
+            "principle": "Security as business risk, not IT problem",
+            "prevents": ["governance", "reactive"],
+            "implementation": "Week 0 (governance gate), Week 10 (business impact assessment)"
+        },
+        "proactive_governance": {
+            "principle": "Prevent issues before they become incidents",
+            "prevents": ["reactive", "governance"],
+            "implementation": "Week 0 (governance gate), Week 10 (security audit logging)"
+        },
+        "foundational_controls": {
+            "principle": "Foundational controls from day one",
+            "prevents": ["tls_ssl", "dns_dnssec"],
+            "implementation": "Week 10 (TLS, DNS, encryption, access control)"
+        }
+    }
+    
+    # Generate recommendations
+    recommendations = []
+    for failure_id, failure in jlr_failures.items():
+        recommendations.append({
+            "failure": failure["issue"],
+            "cosurvival_solution": failure["cosurvival_solution"],
+            "prevention": [
+                principle["principle"] 
+                for principle in cosurvival_principles.values()
+                if failure_id in principle["prevents"]
+            ]
+        })
+    
+    return {
+        "jlr_failures": jlr_failures,
+        "cosurvival_principles": cosurvival_principles,
+        "recommendations": recommendations,
+        "key_lesson": "Security must be a business risk, not an IT problem. Foundational controls are required, not optional. Governance must be proactive, not reactive."
+    }
+```
+
+**Example Analysis:**
+
+```
+JLR Failure: TLS/SSL configuration failures
+Impact: Traffic interception, man-in-the-middle attacks
+COSURVIVAL Solution: Week 10 - HTTPS enforcement, TLS validation
+Prevention: Security by design, foundational controls from day one
+
+JLR Failure: Security as IT problem, not business risk
+Impact: Reactive response, systemic failures, billions in costs
+COSURVIVAL Solution: Week 0 - Governance gate, security by design
+Prevention: Security as business risk, proactive governance
+
+Key Lesson: Security must be a business risk, not an IT problem.
+Foundational controls are required, not optional.
+Governance must be proactive, not reactive.
+```
+
+**Key Insight:** Real-world security failures teach us what happens when security is treated as an IT problem rather than a business risk, and when foundational controls are ignored. COSURVIVAL's governance-first architecture prevents these failures.
+
+**CURRICULUM REFERENCE:**
+- See: Real-World Case Study section (above)
+- Builds on: All Week 10 activities (10.1-10.5)
+- Connects to: Week 0 (Governance Gate), Week 10 (Security Implementation)
+- Related: A-SWE Case Study (AI-generated code security) - `curriculum/case_studies/A_SWE_ANALYSIS.md`
+
+**Success Criteria:**
+- [ ] Can identify JLR's security failures
+- [ ] Can map failures to COSURVIVAL principles
+- [ ] Can explain how COSURVIVAL prevents similar failures
+- [ ] Can generate recommendations based on case study
+- [ ] Can apply lessons to analyze other organizations
+- [ ] Can analyze AI-generated code security risks (A-SWE case study)
+
+**Reflection Questions:**
+After completing this activity, reflect on:
+1. **What would you do differently if you were JLR's CISO?**
+   - How would you prioritize security investments?
+   - What governance structures would you implement?
+   - How would you communicate security as a business risk?
+
+2. **How does this case study change your view of security?**
+   - What surprised you about JLR's failures?
+   - How does this relate to security in your own context?
+   - What patterns do you see in organizations you know?
+
+3. **What patterns do you see in your own organization?**
+   - Are there similar governance gaps?
+   - Are foundational controls properly implemented?
+   - Is security treated as IT problem or business risk?
+
+4. **How can you apply COSURVIVAL principles to prevent similar failures?**
+   - What would a governance gate have prevented at JLR?
+   - How would security by design have changed the outcome?
+   - What foundational controls are most critical?
+
+---
+
 ### Lab 4: Add CSRF Protection
 
 **Task:** Protect forms from CSRF
@@ -808,6 +1212,345 @@ def get_encrypted_db():
 2. Validate tokens on POST
 3. Add tokens to forms
 4. Test protection
+
+---
+
+## AI-Generated Code Security
+
+**Time:** 30 minutes  
+**Learning Objective:** Understand security implications of AI-generated code and how to govern it
+
+### The Challenge
+
+**AI systems like A-SWE (Agentic Software Engineer) can:**
+- Build complete applications
+- Manage pull requests
+- Conduct quality assurance
+- Fix bugs automatically
+- Write documentation
+
+**Security Concerns:**
+1. **Code Provenance:** Who wrote the code? (AI, not human)
+2. **Supply Chain Security:** AI-generated dependencies, automated PR management
+3. **Trust Fabric Violations:** Unclear code integrity, data integrity, identity integrity
+4. **Human Oversight:** Where is human review?
+
+### COSURVIVAL Requirements
+
+**1. Governance Gate for AI Code**
+```python
+def governance_gate_for_ai_code(ai_generated_code: str) -> bool:
+    """
+    AI-generated code must pass same governance as human code.
+    
+    CURRICULUM: Week 0 (Governance Gate), Week 10 (Security)
+    """
+    checks = [
+        pii_check(ai_generated_code),
+        bias_check(ai_generated_code),
+        security_check(ai_generated_code),
+        human_review_required(ai_generated_code),  # Always require human review
+        provenance_tracking(ai_generated_code),    # Track AI origin
+        audit_logging(ai_generated_code)           # Log AI decisions
+    ]
+    return all(checks) and human_approval_required()
+```
+
+**2. Supply Chain Security**
+- SBOM for AI-generated dependencies
+- Signature verification for AI artifacts
+- Audit trails for AI decisions
+- Human verification required
+
+**3. Human-in-the-Loop Required**
+- All AI-generated code requires human review
+- Security-critical code requires human approval
+- AI decisions must be explainable
+
+### Security Risks
+
+**1. AI-Generated Vulnerabilities**
+- AI may introduce security vulnerabilities without understanding them
+- Example: SQL injection, weak authentication, missing rate limiting
+- **Prevention:** Governance gate catches vulnerabilities, human review required
+
+**2. Supply Chain Attacks**
+- AI-generated dependencies may be compromised
+- AI doesn't verify package signatures
+- AI doesn't check SBOM
+- **Prevention:** SBOM generation, signature verification, supply chain checks
+
+**3. Opaque Decision Making**
+- AI makes security decisions without explanation
+- AI fixes bugs without explaining why
+- AI approves PRs without security review
+- **Prevention:** Explainable AI decisions, audit trails, human review
+
+### Implementation Task
+
+```python
+def secure_ai_generated_code(ai_code: str, context: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Secure AI-generated code through governance gate.
+    
+    CURRICULUM: Week 10 - AI-Generated Code Security
+    """
+    # Governance checks
+    governance_result = governance_gate_for_ai_code(ai_code)
+    
+    # Security checks
+    security_result = security_audit(ai_code)
+    
+    # Provenance tracking
+    provenance = track_ai_provenance(ai_code, context)
+    
+    # Human review requirement
+    requires_review = determine_review_requirement(ai_code, context)
+    
+    return {
+        "governance_passed": governance_result,
+        "security_passed": security_result,
+        "provenance": provenance,
+        "requires_human_review": requires_review,
+        "can_deploy": governance_result and security_result and requires_review["approved"]
+    }
+```
+
+**CURRICULUM REFERENCE:**
+- See: `curriculum/case_studies/A_SWE_ANALYSIS.md` - Full A-SWE analysis
+- Builds on: Week 0 (Governance Gate), Week 10 (Security Implementation)
+- Connects to: Shadow Student Mode, AI Ethics
+
+---
+
+## Real-World Case Study: Jaguar Land Rover's Cybersecurity Gamble
+
+**Time:** 45 minutes  
+**Learning Objective:** Understand how treating security as an IT problem rather than a business risk leads to systemic failures
+
+### The Context
+
+Jaguar Land Rover (JLR), a flagship British manufacturer, continues to operate with foundational security failures despite:
+- Years of well-documented best practices
+- A recent cyber incident that disrupted operations and cost billions
+- A UK Government loan intended to support recovery
+
+### Timeline of Failures
+
+**Historical Context:**
+```
+Years of Best Practices Available
+    ↓
+[Unknown Date] - TLS/SSL configuration failures first identified
+[Unknown Date] - DNS/DNSSEC weaknesses first documented
+[Unknown Date] - Governance gaps first reported
+    ↓
+[Recent] - Cyber incident occurs
+    ↓
+[Recent] - Operations disrupted, billions in costs
+    ↓
+[Recent] - UK Government loan provided
+    ↓
+[Present] - Foundational failures remain unresolved
+```
+
+**Key Insight:** The timeline shows a pattern of ignored warnings leading to catastrophic failure. Proactive governance would have prevented this cascade.
+
+**Cost Accumulation:**
+- **Prevention Cost (Estimated):** Implementing foundational controls from start: ~£5-10M
+- **Reactive Cost (Actual):** Billions in operational disruption, recovery, and lost trust
+- **ROI of Proactive Security:** Prevention would have cost <1% of reactive response
+
+### The Failures
+
+**1. TLS/SSL Configuration Failures**
+- Basic failures in TLS/SSL configuration remain unresolved
+- Inconsistent HTTP/HTTPS enforcement across digital assets
+- These are not cutting-edge issues—they are foundational controls
+
+**2. DNS/DNSSEC Weaknesses**
+- Unsecured DNS infrastructure
+- Inconsistent DNSSEC deployment
+- Core DNS zones remain vulnerable
+
+**3. Governance Failures**
+- Security treated as IT problem, not business risk
+- Reactive response to incidents rather than structural reform
+- Government funding used as "sticking plaster" over systemic issues
+
+### The Impact
+
+**Direct Consequences:**
+- Traffic interception risks
+- Brand impersonation vulnerabilities
+- Customer, partner, and supplier exposure
+- Operational disruption costing billions
+
+**Systemic Consequences:**
+- Undermined confidence in flagship manufacturer
+- Supply chain disruption
+- Economic impact beyond JLR's balance sheet
+
+### COSURVIVAL Analysis
+
+**What JLR Did Wrong (Anti-Patterns):**
+
+1. **Security as IT Problem, Not Business Risk**
+   ```python
+   # ANTI-PATTERN: Security isolated from business decisions
+   # JLR: "IT will handle security"
+   # COSURVIVAL: Security is woven into architecture, governance, and business decisions
+   ```
+
+2. **Reactive vs. Proactive Security**
+   ```python
+   # ANTI-PATTERN: Fix after incident
+   # JLR: Responded to cyber incident reactively
+   # COSURVIVAL: Governance gate prevents issues before they become incidents
+   ```
+
+3. **Foundational Controls Ignored**
+   ```python
+   # ANTI-PATTERN: Basic controls not implemented
+   # JLR: TLS/SSL, DNS/DNSSEC failures
+   # COSURVIVAL: Week 10 - All foundational controls implemented from start
+   ```
+
+4. **Governance Debt**
+   ```python
+   # ANTI-PATTERN: Funding masks lack of governance
+   # JLR: Government loan as "sticking plaster"
+   # COSURVIVAL: Week 0 - Governance gate before any processing
+   ```
+
+### What COSURVIVAL Does Right
+
+**1. Security by Design (Week 0, Week 10)**
+- Governance gate prevents processing without security checks
+- Security woven into architecture, not bolted on
+- Foundational controls (TLS, DNS, encryption) from day one
+
+**2. Business Risk, Not IT Problem**
+- Security failures = business failures
+- Supply chain impact considered
+- Trust as strategic asset, not technical detail
+
+**3. Proactive Governance**
+- Governance gate prevents issues
+- Security audit logging throughout
+- Supply chain security (SBOM, signatures, provenance)
+
+**4. Trust as Supply Chain Problem**
+- Code integrity (signed artifacts, SBOM)
+- Data integrity (provenance, tamper-evident logs)
+- Identity integrity (verified identities, least privilege)
+- Human integrity (anti-manipulation, transparency)
+
+### Key Lessons
+
+**For Learners:**
+
+1. **Security is not optional.** Foundational controls (TLS, DNS, encryption) are not "nice to have"—they are required.
+
+2. **Security is a business risk, not an IT problem.** Failures impact operations, supply chains, and economic stability.
+
+3. **Reactive security fails.** Governance must be proactive—prevent issues before they become incidents.
+
+4. **Funding doesn't fix governance.** Money alone cannot solve structural security failures.
+
+5. **Trust is strategic.** In an era where trust is digital and resilience is strategic, security weaknesses undermine confidence.
+
+**COSURVIVAL Principles Applied:**
+
+- ✅ **Week 0:** Governance gate prevents processing without security checks
+- ✅ **Week 10:** Foundational controls (TLS, DNS, encryption) implemented
+- ✅ **Security by Design:** Security woven into architecture, not bolted on
+- ✅ **Trust as Supply Chain:** Code, data, identity, and human integrity
+- ✅ **Business Risk:** Security failures = business failures
+
+### Discussion Questions
+
+1. **Why did JLR treat security as an IT problem rather than a business risk?**
+   - What organizational structures enable this?
+   - How can COSURVIVAL avoid this?
+
+2. **How does reactive security differ from proactive governance?**
+   - What would proactive governance have prevented at JLR?
+   - How does COSURVIVAL's governance gate prevent similar issues?
+
+3. **Why do foundational controls (TLS, DNS) remain unresolved?**
+   - What technical debt accumulates when basics are ignored?
+   - How does COSURVIVAL ensure foundational controls from day one?
+
+4. **How does trust become a strategic asset?**
+   - What happens when trust is undermined (JLR example)?
+   - How does COSURVIVAL build trust through security?
+
+5. **What is the difference between funding and governance?**
+   - Why did the UK Government loan fail to fix JLR's issues?
+   - How does COSURVIVAL ensure governance, not just funding?
+
+### Implementation Task
+
+**Analyze a hypothetical COSURVIVAL deployment using JLR's failures:**
+
+```python
+def analyze_security_posture(organization: str) -> Dict[str, Any]:
+    """
+    Analyze security posture using JLR case study lessons.
+    
+    CURRICULUM: Week 10 - Real-World Case Study
+    """
+    # Check foundational controls
+    tls_status = check_tls_configuration(organization)
+    dns_status = check_dns_dnssec(organization)
+    encryption_status = check_encryption_at_rest_and_transit(organization)
+    
+    # Check governance
+    governance_status = check_governance_gate(organization)
+    proactive_status = check_proactive_security(organization)
+    
+    # Check business risk integration
+    business_risk_status = check_security_as_business_risk(organization)
+    
+    # Generate report
+    return {
+        "foundational_controls": {
+            "tls": tls_status,
+            "dns": dns_status,
+            "encryption": encryption_status,
+            "all_passing": all([tls_status, dns_status, encryption_status])
+        },
+        "governance": {
+            "governance_gate": governance_status,
+            "proactive": proactive_status,
+            "reactive_only": not proactive_status
+        },
+        "business_risk": {
+            "integrated": business_risk_status,
+            "isolated": not business_risk_status
+        },
+        "jlr_anti_patterns": {
+            "security_as_it_problem": not business_risk_status,
+            "reactive_only": not proactive_status,
+            "foundational_controls_failing": not all([tls_status, dns_status, encryption_status]),
+            "governance_debt": not governance_status
+        },
+        "recommendations": generate_recommendations(...)
+    }
+```
+
+**Success Criteria:**
+- [ ] Can identify JLR's security failures
+- [ ] Can explain why security must be a business risk, not IT problem
+- [ ] Can apply COSURVIVAL principles to prevent similar failures
+- [ ] Can analyze security posture using JLR lessons
+- [ ] Can generate recommendations based on case study
+
+**CURRICULUM REFERENCE:**
+- See: `curriculum/security/SECURITY_TRUST_FABRIC.md`
+- Builds on: All Week 10 activities (10.1-10.5)
+- Connects to: Week 0 (Governance Gate), Week 10 (Security Implementation)
 
 ---
 

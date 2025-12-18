@@ -156,6 +156,14 @@ Concepts introduced:
 - PII (Personally Identifiable Information)
 - Bias guardrails ("high activity ≠ high value")
 - Prohibited inferences (never predict performance)
+- AI-generated code governance (human review required, provenance tracking)
+
+**AI-Generated Code Governance:**
+- AI-generated code must pass same governance as human code
+- Human review required for all AI-generated code
+- Provenance tracking (who/what generated it)
+- Audit trails for AI decisions
+- See: `curriculum/case_studies/A_SWE_ANALYSIS.md` for full analysis
 
 #### Activity 0.4: Ethical Guardrails
 **Time:** 20 minutes
@@ -237,6 +245,94 @@ The biblical view: All technical achievement means nothing without love (charity
 
 **Reflection:** What would you do with time freed by AI? How would you use it to love others?
 
+#### Activity 0.5: Negative Patterns Are Not Nonsense (Dirac-Inspired)
+**Time:** 25 minutes
+
+**Learning Objective:** Understand that gaps, absences, and inverse relationships are valid insights, not "nonsense" to be ignored.
+
+**Context:** Just as Dirac refused to ignore negative energy solutions and discovered antiparticles, we can find profound insights in what's NOT happening.
+
+**Activity Steps:**
+
+1. **Given a dataset, identify:**
+   - What patterns ARE present (positive patterns)
+   - What patterns are ABSENT (negative patterns)
+   - What relationships are INVERSE (anti-patterns)
+
+2. **For each positive pattern, find its complementary anti-pattern:**
+   - High collaboration → Isolation gaps
+   - Skill progression → Skill stagnation
+   - Provider adoption → Provider abandonment
+
+3. **Explain why the anti-pattern is as important as the pattern:**
+   - What does the gap reveal?
+   - What opportunity does the absence create?
+   - What truth does the inverse relationship show?
+
+**Example:**
+```
+Positive Pattern: "User A collaborates frequently with Team X"
+Anti-Pattern: "User A has NO collaboration with Team Y (despite similar roles)"
+Insight: "User A may be siloed in Team X, missing cross-team opportunities"
+```
+
+**Key Insight:** Like Dirac's negative energy solutions revealing antiparticles, gaps and absences reveal complementary insights. What's NOT happening is as important as what IS happening.
+
+**CURRICULUM REFERENCE:**
+- See: `curriculum/vision/chapters/DIrac_ANTIPATTERNS_APPLICATION.md` for full implementation
+- See: `DIRAC_CONCEPTS_APPLICATION_SUMMARY.md` for quick reference
+
+**Inspiration:**
+> *"The saddest chapter in modern physics" became one of the most profound discoveries when Dirac refused to ignore negative energy solutions.*
+
+**Connection:** What if our "saddest patterns" — the gaps, the absences, the inverses — become our most profound insights?
+
+#### Activity 0.6: Understanding vs. Information (Dr. K-Inspired)
+**Time:** 30 minutes
+
+**Learning Objective:** Distinguish between information (transmissible) and understanding (experiential)
+
+**Context:** Just as Dr. K distinguishes vidya (information) from nan (understanding), learners must understand that some things can be taught, while others must be experienced.
+
+**Activity Steps:**
+
+1. **Given a concept, identify:**
+   - What information can be transmitted (vidya - objective, transmissible)
+   - What understanding must be experienced (nan - subjective, experiential)
+
+2. **Example:**
+   ```
+   Concept: "High collaboration with Team X"
+   
+   Information (vidya - transmissible):
+   - "You have 45 interactions with Team X in last 30 days"
+   - "This is 30% above average for similar roles"
+   - "Team X has 12 members"
+   
+   Understanding (nan - experiential):
+   - "What does this collaboration mean for you?"
+   - "How does this feel?"
+   - "What does this reveal about your identity?"
+   - Cannot be transmitted - must be experienced
+   ```
+
+3. **Design an experience:**
+   - For each piece of information, design an experience that leads to understanding
+   - Information: "You have skill gaps"
+   - Experience: "Try this exercise and see how it feels"
+   - Understanding: "Now you understand why this matters"
+
+**Key Insight:** Information can be taught. Understanding must be experienced. COSURVIVAL provides information, but users must experience to understand.
+
+**CURRICULUM REFERENCE:**
+- See: `curriculum/vision/chapters/DR_K_CONSCIOUSNESS_APPLICATION.md`
+- Builds on: Activity 0.5 (Negative Patterns Are Not Nonsense)
+
+**Inspiration:**
+> *"Understanding (nan) is subjective, not transmissible. Information (vidya) is objective, transmissible. The big problem in society is everyone is looking for information, but we're looking for understanding."*
+
+**Connection:** We can teach information (patterns, statistics), but understanding (what it means for you, how to act) must be experienced.
+
 ### Checkpoint 0
 **Artifact:** Reflection document
 
@@ -286,8 +382,14 @@ RAW DATA → [GOVERNANCE GATE] → CLEAN DATA → ANALYSIS
               ├── PII Check (hash names, emails)
               ├── Bias Check (no performance inference)
               ├── Scope Check (no prohibited outputs)
+              ├── AI Code Check (if AI-generated: human review, provenance tracking)
               └── Review Trigger (human approval needed?)
 ```
+
+**AI-Generated Code Governance:**
+If code or data is AI-generated (e.g., from A-SWE, Copilot, or other AI tools),
+additional checks are required: human review, provenance tracking, audit logging.
+See: `curriculum/case_studies/A_SWE_ANALYSIS.md` for full analysis.
 
 #### 3. Schema Detection
 
@@ -324,6 +426,83 @@ Write pseudocode for:
 1. Detecting a user-to-user interaction
 2. Detecting a permission upgrade
 3. Detecting a provider error
+
+#### Activity 1.4: Multi-Component Wave Functions (Dirac-Inspired)
+**Time:** 30 minutes
+
+**Learning Objective:** Understand that complete analysis requires multiple components (like Dirac's four-component wave function)
+
+**Context:** Just as Dirac's wave function needed four components (spin up/down electron, spin up/down positron), COSURVIVAL analysis needs four components: TRIBE, TEACHER, RECON, and ANTI-PATTERNS.
+
+**Activity Steps:**
+
+1. **Analyze the same dataset through four components:**
+   - **TRIBE component:** Collaboration patterns (positive)
+   - **TEACHER component:** Learning patterns (positive)
+   - **RECON component:** Value exchange patterns (positive)
+   - **ANTI-PATTERN component:** Gaps and absences (negative)
+
+2. **Show how each component reveals different aspects:**
+   - TRIBE: "Who is connected?"
+   - TEACHER: "Who is learning?"
+   - RECON: "What value is exchanged?"
+   - ANTI-PATTERNS: "What's missing?"
+
+3. **Unify all four into a single coherent insight:**
+   - Write a paragraph that synthesizes all four components
+   - Explain how they complement each other
+
+**Example:**
+```
+TRIBE: "User A collaborates with Team X"
+TEACHER: "User A is learning data governance"
+RECON: "User A uses Provider Y for analytics"
+ANTI-PATTERN: "User A has NO collaboration with security team (despite learning security-relevant skills)"
+UNIFIED: "User A is developing security skills but not connecting with security team - potential bridge opportunity"
+```
+
+**Key Insight:** Like Dirac's four-component wave function revealing complete electron states, four-component analysis reveals complete understanding.
+
+**CURRICULUM REFERENCE:**
+- See: `curriculum/vision/chapters/DIrac_ANTIPATTERNS_APPLICATION.md`
+- Builds on: Activity 0.5 (Negative Patterns Are Not Nonsense)
+
+#### Activity 1.5: Layers of Reality in Data Analysis (Dr. K-Inspired)
+**Time:** 35 minutes
+
+**Learning Objective:** Understand that data analysis operates at multiple layers (physical, mental, consciousness)
+
+**Context:** Just as Dr. K describes layers of reality (physical, mental, spiritual), data analysis has layers (raw data, patterns, meaning).
+
+**Activity Steps:**
+
+1. **Identify three layers in data analysis:**
+   - **Physical Layer**: Raw data, measurable metrics (brain scans, activity counts)
+   - **Mental Layer**: Patterns, insights, recommendations (thoughts, emotions - derived, not directly measurable)
+   - **Consciousness Layer**: User's subjective experience, meaning, purpose (cannot be detected, only reported)
+
+2. **Show how each layer is different:**
+   - Physical: "45 interactions" (measurable)
+   - Mental: "High collaboration pattern" (derived, not directly measurable)
+   - Consciousness: "This collaboration feels meaningful" (cannot be detected, only reported)
+
+3. **Explain the relationship:**
+   - Physical layer affects mental layer
+   - Mental layer affects consciousness layer
+   - But they're qualitatively different
+
+**Example:**
+```
+Physical: "User A has 45 interactions with Team X" (measurable)
+Mental: "This indicates high collaboration" (derived, not directly measurable)
+Consciousness: "User A feels connected and valued" (cannot be detected, only reported)
+```
+
+**Key Insight:** We can measure data, derive patterns, but cannot detect user experience. We must rely on user reports and always acknowledge: "I can see patterns, but I cannot know your experience."
+
+**CURRICULUM REFERENCE:**
+- See: `curriculum/vision/chapters/DR_K_CONSCIOUSNESS_APPLICATION.md`
+- Builds on: Activity 0.6 (Understanding vs. Information)
 
 ### Checkpoint 1
 **Artifact:** governance_rules.md

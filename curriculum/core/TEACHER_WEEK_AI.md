@@ -730,6 +730,135 @@ class SkillEmbedding:
 
 ---
 
+## Case Study: OpenAI A-SWE - AI That Writes Software
+
+**Time:** 45 minutes  
+**Learning Objective:** Analyze AI systems that replace workflows vs. AI that guides learning
+
+### The Context
+
+OpenAI's **A-SWE (Agentic Software Engineer)** goes beyond code completion tools like Copilot. A-SWE handles the full development cycle:
+- Builds complete applications
+- Manages pull requests
+- Conducts quality assurance
+- Fixes bugs automatically
+- Writes documentation
+
+**Key Difference:**
+- **Current tools (Copilot):** Assist developers
+- **A-SWE:** Replaces entire workflows
+
+**Impact:** "The gap between idea and deployed software shrinks."
+
+### COSURVIVAL Analysis
+
+**Core Tension: Advisor vs. Authority**
+
+| Aspect | A-SWE | COSURVIVAL/SSM |
+|--------|-------|----------------|
+| **Purpose** | Replace workflows | Guide learning |
+| **Decision Making** | AI decides | Human decides |
+| **Transparency** | Unclear | Explicit reasoning |
+| **Override** | Unclear | Always allowed |
+| **Learning** | Replaced | Built |
+
+**Key Insight:** A-SWE replaces human agency. COSURVIVAL's Shadow Student Mode (SSM) guides while preserving agency.
+
+### Shadow Student Mode vs. A-SWE
+
+**Shadow Student Mode (SSM):**
+- AI completes assignments **internally** to understand them
+- Uses understanding to **teach**, not replace
+- Default: **guide, don't replace**
+- Solution reveal is explicit, logged, rare
+
+**A-SWE:**
+- AI completes assignments **externally** (deployed code)
+- Uses capability to **replace**, not teach
+- Default: **replace workflows**
+- Solution reveal is automatic, continuous
+
+**Critical Difference:**
+```
+SSM: "I understand this, so I can teach you better"
+A-SWE: "I can do this, so you don't need to"
+```
+
+### Security Implications
+
+**A-SWE Security Concerns:**
+
+1. **Code Provenance**
+   - Who wrote the code? (AI, not human)
+   - Can we verify AI-generated code?
+   - How do we audit AI decisions?
+
+2. **Supply Chain Security**
+   - AI-generated dependencies
+   - Automated PR management
+   - QA conducted by AI
+   - Bug fixes without human review
+
+3. **Trust Fabric Violations**
+   - Code integrity: Can we sign AI-generated artifacts?
+   - Data integrity: How do we track AI decisions?
+   - Identity integrity: Who is responsible for AI code?
+   - Human integrity: Where is human oversight?
+
+**COSURVIVAL Requirements:**
+- AI-generated code must pass governance gate
+- Human review required for security-critical code
+- SBOM for AI-generated dependencies
+- Audit trails for AI decisions
+
+### Discussion Questions
+
+1. **Advisor vs. Authority:**
+   - "How does A-SWE differ from COSURVIVAL's 'AI as advisor' principle?"
+   - "What are the risks of AI replacing entire workflows?"
+   - "How does SSM preserve agency while A-SWE replaces it?"
+
+2. **Security Concerns:**
+   - "What security risks does AI-generated code introduce?"
+   - "How would you govern AI that writes software?"
+   - "What governance checks would you require for AI code?"
+
+3. **Learning vs. Dependency:**
+   - "Does A-SWE build skills or replace them?"
+   - "How does SSM preserve learning while A-SWE risks dependency?"
+   - "What happens when developers can't code because AI does it?"
+
+4. **Practical Application:**
+   - "Would you use A-SWE in your organization? Why or why not?"
+   - "What safeguards would you require?"
+   - "How would you ensure human oversight?"
+
+### COSURVIVAL Recommendations
+
+1. **Human-in-the-Loop Required**
+   - All AI-generated code requires human review
+   - Security-critical code requires human approval
+   - AI decisions must be explainable
+
+2. **Governance Gate for AI Code**
+   - AI code passes same governance as human code
+   - Additional AI-specific checks (provenance, audit trails)
+   - Human approval required before deployment
+
+3. **Agency Preservation**
+   - AI advises, doesn't replace
+   - Override mechanisms always available
+   - Learning preserved, not replaced
+
+**Key Lesson:** AI should help developers learn and grow, with governance and security built in—not replace developers entirely.
+
+**CURRICULUM REFERENCE:**
+- See: `curriculum/case_studies/A_SWE_ANALYSIS.md` - Full analysis
+- Builds on: Core Concept (AI as advisor, not authority)
+- Connects to: Shadow Student Mode, Week 10 (Security), Governance Gate
+
+---
+
 ## Assessment: Self-Relative Growth
 
 ### Baseline (Before Week AI)

@@ -656,6 +656,102 @@ class ReconsumeralizationData:
 
 
 @dataclass
+class AntiPatternSignal:
+    """
+    A complementary pattern that reveals what's NOT happening.
+    
+    Like Dirac's antiparticles, these reveal the "negative energy" side
+    of our analysis - gaps, absences, inverse relationships.
+    
+    CURRICULUM: Week 0, Activity 0.5 - Negative Patterns Are Not Nonsense
+    Week 1, Activity 1.3 - Multi-Component Wave Functions
+    See: curriculum/vision/chapters/DIrac_ANTIPATTERNS_APPLICATION.md
+    """
+
+    id: str
+    domain: str  # TRIBE, TEACHER, RECON, etc.
+    anti_pattern_type: str  # e.g., "collaboration_gap", "skill_absence"
+    complementary_to: str  # ID of the pattern this complements
+    strength: str  # weak, moderate, strong, critical
+    description: str
+    detected_at: str
+    confidence: float  # 0.0-1.0
+
+    # What's missing or inverse
+    gap_description: str
+    absence_evidence: List[str] = field(default_factory=list)
+    inverse_relationship: Optional[Dict[str, Any]] = None
+
+    # Temporal direction
+    temporal_direction: str = "forwards"  # "forwards" (predictive) or "backwards" (retrospective)
+
+    # Connection to "positive" pattern
+    pattern_anti_pattern_annihilation: Optional[Dict[str, Any]] = None
+    # When pattern and anti-pattern meet, what truth is revealed?
+
+    # Supporting evidence
+    evidence: List[str] = field(default_factory=list)
+    data_points: List[Dict[str, Any]] = field(default_factory=list)
+
+    # Nonjudgmental framing
+    framing: str = ""  # How to present this as opportunity, not deficiency
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "id": self.id,
+            "domain": self.domain,
+            "anti_pattern_type": self.anti_pattern_type,
+            "complementary_to": self.complementary_to,
+            "strength": self.strength,
+            "description": self.description,
+            "detected_at": self.detected_at,
+            "confidence": self.confidence,
+            "gap_description": self.gap_description,
+            "absence_evidence": self.absence_evidence,
+            "inverse_relationship": self.inverse_relationship,
+            "temporal_direction": self.temporal_direction,
+            "pattern_anti_pattern_annihilation": self.pattern_anti_pattern_annihilation,
+            "evidence": self.evidence,
+            "data_points": self.data_points[:5],  # Limit for display
+            "framing": self.framing,
+        }
+
+
+@dataclass
+class PatternAnnihilation:
+    """
+    Insight revealed when pattern and anti-pattern meet.
+    
+    Like particle-antiparticle annihilation producing energy,
+    pattern-anti-pattern annihilation produces insight.
+    
+    CURRICULUM: Week 1, Activity 1.3 - Multi-Component Wave Functions
+    See: curriculum/vision/chapters/DIrac_ANTIPATTERNS_APPLICATION.md
+    """
+
+    id: str
+    pattern_id: str
+    anti_pattern_id: str
+    insight: str
+    revealed_truth: str
+    recommendation: Optional[str] = None
+    confidence: float = 0.0
+    detected_at: str = ""
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "id": self.id,
+            "pattern_id": self.pattern_id,
+            "anti_pattern_id": self.anti_pattern_id,
+            "insight": self.insight,
+            "revealed_truth": self.revealed_truth,
+            "recommendation": self.recommendation,
+            "confidence": self.confidence,
+            "detected_at": self.detected_at,
+        }
+
+
+@dataclass
 class CosurvivalData:
     """Complete Cosurvival system data container."""
 

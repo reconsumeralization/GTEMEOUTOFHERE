@@ -14,6 +14,13 @@ This advisor:
 - Always explains reasoning transparently
 - Respects user agency (preferences, overrides)
 - Uses nonjudgmental, supportive framing
+
+**AI as Advisor, Not Authority:**
+Unlike systems like A-SWE (Agentic Software Engineer) that replace workflows,
+this advisor guides and supports human decision-making without replacing it.
+A-SWE: "I can do this, so you don't need to"
+COSURVIVAL: "I understand this, so I can help you learn and decide"
+See: `curriculum/case_studies/A_SWE_ANALYSIS.md` for comparison.
 """
 
 """
@@ -31,6 +38,13 @@ This advisor:
 - Always explains reasoning transparently
 - Respects user agency (preferences, overrides)
 - Uses nonjudgmental, supportive framing
+
+**AI as Advisor, Not Authority:**
+Unlike systems like A-SWE (Agentic Software Engineer) that replace workflows,
+this advisor guides and supports human decision-making without replacing it.
+A-SWE: "I can do this, so you don't need to"
+COSURVIVAL: "I understand this, so I can help you learn and decide"
+See: `curriculum/case_studies/A_SWE_ANALYSIS.md` for comparison.
 """
 
 # Standard library imports
@@ -1123,6 +1137,346 @@ class CosurvivalAdvisor:
         }
 
         return explanation
+
+    # =========================================================================
+    # ANTI-PATTERN DETECTION (Dirac-Inspired)
+    # =========================================================================
+
+    def detect_anti_patterns(
+        self,
+        user_id: str,
+        data: Dict[str, Any],
+        positive_patterns: List[PatternSignal],
+    ) -> List[Any]:
+        """
+        Detect complementary anti-patterns for each positive pattern.
+        
+        Like Dirac finding antiparticles in negative energy solutions,
+        we find insights in gaps, absences, and inverse relationships.
+        
+        CURRICULUM: Week 0, Activity 0.5 - Negative Patterns Are Not Nonsense
+        Week 1, Activity 1.3 - Multi-Component Wave Functions
+        See: curriculum/vision/chapters/DIrac_ANTIPATTERNS_APPLICATION.md
+        """
+        # Import here to avoid circular dependency
+        from models import AntiPatternSignal
+
+        anti_patterns = []
+        prefs = self.get_user_preferences(user_id)
+
+        # For each positive pattern, find complementary anti-pattern
+        for pattern in positive_patterns:
+            anti_pattern = self._find_complementary_anti_pattern(pattern, data, prefs)
+            if anti_pattern:
+                anti_patterns.append(anti_pattern)
+
+        # Also detect standalone anti-patterns (gaps without corresponding patterns)
+        standalone_anti_patterns = self._detect_standalone_anti_patterns(user_id, data, prefs)
+        anti_patterns.extend(standalone_anti_patterns)
+
+        return anti_patterns
+
+    def _find_complementary_anti_pattern(
+        self,
+        pattern: PatternSignal,
+        data: Dict[str, Any],
+        prefs: Optional[UserPreferences],
+    ) -> Optional[Any]:
+        """
+        For each pattern, find what's NOT happening.
+        
+        Examples:
+        - High collaboration → Isolation gaps
+        - Skill progression → Skill stagnation
+        - Provider adoption → Provider abandonment
+        """
+        # Import here to avoid circular dependency
+        from models import AntiPatternSignal
+
+        if pattern.domain == Domain.TRIBE:
+            return self._find_collaboration_gap(pattern, data)
+        elif pattern.domain == Domain.TEACHER:
+            return self._find_learning_absence(pattern, data)
+        elif pattern.domain == Domain.RECON:
+            return self._find_adoption_gap(pattern, data)
+        return None
+
+    def _find_collaboration_gap(
+        self, pattern: PatternSignal, data: Dict[str, Any]
+    ) -> Optional[Any]:
+        """Find collaboration gaps (TRIBE anti-pattern)."""
+        from models import AntiPatternSignal
+
+        # If pattern is about collaboration with Team X, look for absence with Team Y
+        if "collaboration" in pattern.signal_type.lower():
+            # This is a simplified example - in real implementation, would analyze network
+            # to find teams that SHOULD have collaboration but don't
+            gap_description = (
+                f"While {pattern.description}, there may be collaboration gaps "
+                "with other teams that could benefit from connection."
+            )
+
+            anti_pattern = AntiPatternSignal(
+                id=f"anti_{pattern.id}",
+                domain="TRIBE",
+                anti_pattern_type="collaboration_gap",
+                complementary_to=pattern.id,
+                strength=pattern.strength.value,
+                description="Potential collaboration gap detected",
+                detected_at=datetime.now().isoformat(),
+                confidence=pattern.confidence * 0.8,  # Slightly lower confidence
+                gap_description=gap_description,
+                absence_evidence=[
+                    "No collaboration detected with similar teams",
+                    "Network analysis suggests bridge opportunities exist",
+                ],
+                temporal_direction="forwards",
+                evidence=pattern.evidence,
+                framing="This gap represents an opportunity for broader connection, not a deficiency.",
+            )
+            return anti_pattern
+        return None
+
+    def _find_learning_absence(
+        self, pattern: PatternSignal, data: Dict[str, Any]
+    ) -> Optional[Any]:
+        """Find learning absences (TEACHER anti-pattern)."""
+        from models import AntiPatternSignal
+
+        # If pattern is about skill progression, look for missing prerequisites
+        if "skill" in pattern.signal_type.lower() or "learning" in pattern.signal_type.lower():
+            gap_description = (
+                f"While {pattern.description}, there may be prerequisite skills "
+                "or foundational knowledge that are missing."
+            )
+
+            anti_pattern = AntiPatternSignal(
+                id=f"anti_{pattern.id}",
+                domain="TEACHER",
+                anti_pattern_type="skill_absence",
+                complementary_to=pattern.id,
+                strength=pattern.strength.value,
+                description="Potential learning gap detected",
+                detected_at=datetime.now().isoformat(),
+                confidence=pattern.confidence * 0.8,
+                gap_description=gap_description,
+                absence_evidence=[
+                    "Prerequisite skills may not be fully developed",
+                    "Learning path may have gaps",
+                ],
+                temporal_direction="forwards",
+                evidence=pattern.evidence,
+                framing="This gap represents a learning opportunity, not a deficiency.",
+            )
+            return anti_pattern
+        return None
+
+    def _find_adoption_gap(
+        self, pattern: PatternSignal, data: Dict[str, Any]
+    ) -> Optional[Any]:
+        """Find adoption gaps (RECON anti-pattern)."""
+        from models import AntiPatternSignal
+
+        # If pattern is about provider usage, look for providers that should be adopted but aren't
+        if "provider" in pattern.signal_type.lower() or "adoption" in pattern.signal_type.lower():
+            gap_description = (
+                f"While {pattern.description}, there may be providers or tools "
+                "that could add value but aren't being used."
+            )
+
+            anti_pattern = AntiPatternSignal(
+                id=f"anti_{pattern.id}",
+                domain="RECON",
+                anti_pattern_type="adoption_gap",
+                complementary_to=pattern.id,
+                strength=pattern.strength.value,
+                description="Potential adoption gap detected",
+                detected_at=datetime.now().isoformat(),
+                confidence=pattern.confidence * 0.8,
+                gap_description=gap_description,
+                absence_evidence=[
+                    "Similar organizations use additional providers",
+                    "Value opportunities may be missed",
+                ],
+                temporal_direction="forwards",
+                evidence=pattern.evidence,
+                framing="This gap represents an opportunity for better tool fit, not a failure.",
+            )
+            return anti_pattern
+        return None
+
+    def _detect_standalone_anti_patterns(
+        self,
+        user_id: str,
+        data: Dict[str, Any],
+        prefs: Optional[UserPreferences],
+    ) -> List[Any]:
+        """Detect anti-patterns that exist independently (not tied to specific patterns)."""
+        from models import AntiPatternSignal
+
+        anti_patterns = []
+
+        # Check TRIBE domain
+        if not prefs or Domain.TRIBE not in prefs.domains_to_exclude:
+            # Look for isolation patterns
+            if "tribe" in data:
+                tribe_data = data["tribe"]
+                if "collaboration_trend" in tribe_data:
+                    trend = tribe_data["collaboration_trend"]
+                    if trend.get("direction") == "declining":
+                        anti_pattern = AntiPatternSignal(
+                            id=f"anti_standalone_tribe_{datetime.now().strftime('%Y%m%d%H%M%S')}",
+                            domain="TRIBE",
+                            anti_pattern_type="isolation_gap",
+                            complementary_to="",
+                            strength="moderate",
+                            description="Collaboration opportunities may be missed",
+                            detected_at=datetime.now().isoformat(),
+                            confidence=0.65,
+                            gap_description="Declining collaboration may indicate isolation gaps",
+                            absence_evidence=["Fewer connections than expected", "Potential bridge opportunities"],
+                            temporal_direction="forwards",
+                            framing="This represents an opportunity for connection, not a problem.",
+                        )
+                        anti_patterns.append(anti_pattern)
+
+        return anti_patterns
+
+    def analyze_pattern_annihilation(
+        self, pattern: PatternSignal, anti_pattern: Any
+    ) -> Dict[str, Any]:
+        """
+        When pattern and anti-pattern meet, what truth is revealed?
+        
+        Like particle-antiparticle annihilation producing energy,
+        pattern-anti-pattern annihilation produces insight.
+        
+        CURRICULUM: Week 1, Activity 1.3 - Multi-Component Wave Functions
+        See: curriculum/vision/chapters/DIrac_ANTIPATTERNS_APPLICATION.md
+        """
+        from models import PatternAnnihilation
+
+        # Find overlap and contradiction
+        overlap = {
+            "domain": pattern.domain.value,
+            "temporal_direction": anti_pattern.temporal_direction,
+            "confidence_combined": (pattern.confidence + anti_pattern.confidence) / 2,
+        }
+
+        # Generate insight from the combination
+        if pattern.domain == Domain.TRIBE:
+            insight = (
+                f"Pattern: {pattern.description}. "
+                f"Anti-pattern: {anti_pattern.description}. "
+                "Together, they reveal a siloing pattern with bridge opportunities."
+            )
+            revealed_truth = (
+                "User is highly engaged in some areas but isolated in others. "
+                "This creates bridge opportunities for broader impact."
+            )
+            recommendation = "Consider connecting with teams or individuals in the gap areas."
+
+        elif pattern.domain == Domain.TEACHER:
+            insight = (
+                f"Pattern: {pattern.description}. "
+                f"Anti-pattern: {anti_pattern.description}. "
+                "Together, they reveal a learning path with gaps."
+            )
+            revealed_truth = (
+                "User is progressing in some skills but missing foundational knowledge. "
+                "This creates learning opportunities to complete the path."
+            )
+            recommendation = "Consider adding prerequisite skills to complete the learning path."
+
+        elif pattern.domain == Domain.RECON:
+            insight = (
+                f"Pattern: {pattern.description}. "
+                f"Anti-pattern: {anti_pattern.description}. "
+                "Together, they reveal provider usage patterns with opportunities."
+            )
+            revealed_truth = (
+                "User is using some providers effectively but missing others that could add value. "
+                "This creates opportunities for better tool fit."
+            )
+            recommendation = "Consider exploring providers that could fill the gap."
+
+        else:
+            insight = f"Pattern and anti-pattern reveal complementary aspects of the same reality."
+            revealed_truth = "The combination of what IS and what's NOT reveals complete truth."
+            recommendation = None
+
+        annihilation = PatternAnnihilation(
+            id=f"annihilation_{pattern.id}_{anti_pattern.id}",
+            pattern_id=pattern.id,
+            anti_pattern_id=anti_pattern.id,
+            insight=insight,
+            revealed_truth=revealed_truth,
+            recommendation=recommendation,
+            confidence=overlap["confidence_combined"],
+            detected_at=datetime.now().isoformat(),
+        )
+
+        return annihilation.to_dict()
+
+    def analyze_temporal_inversion(
+        self, data: Dict[str, Any], outcome: str
+    ) -> Dict[str, Any]:
+        """
+        Work backwards from outcomes to find causes.
+        
+        Like Dirac's negative energy = antiparticle backwards in time,
+        we work backwards from outcomes to reveal hidden patterns.
+        
+        CURRICULUM: Week 10, Activity 10.4 - Forwards and Backwards in Time
+        See: curriculum/vision/chapters/DIrac_ANTIPATTERNS_APPLICATION.md
+        """
+        # Start with outcome
+        outcome_patterns = self._find_patterns_leading_to_outcome(data, outcome)
+
+        # Work backwards to find causes
+        causal_chain = []
+        current = outcome
+
+        # Simplified example - in real implementation, would trace back through time
+        max_depth = 5
+        depth = 0
+        while depth < max_depth:
+            causes = self._find_causes(data, current)
+            if not causes:
+                break
+            causal_chain.append({"effect": current, "causes": causes, "depth": depth})
+            current = causes[0] if causes else None
+            if not current:
+                break
+            depth += 1
+
+        return {
+            "outcome": outcome,
+            "causal_chain": causal_chain,
+            "root_causes": causal_chain[-1]["causes"] if causal_chain else [],
+            "temporal_direction": "backwards",
+            "insight": "Working backwards from outcome reveals the causal chain that led to it.",
+        }
+
+    def _find_patterns_leading_to_outcome(
+        self, data: Dict[str, Any], outcome: str
+    ) -> List[str]:
+        """Find patterns that likely led to the outcome."""
+        # Simplified - in real implementation, would analyze temporal data
+        patterns = []
+        if "security" in outcome.lower():
+            patterns.append("privilege_escalation")
+            patterns.append("access_pattern_change")
+        return patterns
+
+    def _find_causes(self, data: Dict[str, Any], effect: str) -> List[str]:
+        """Find likely causes of an effect."""
+        # Simplified - in real implementation, would analyze causal relationships
+        causes = []
+        if "data_access" in effect.lower():
+            causes.append("privilege_change")
+            causes.append("role_change")
+        return causes
 
     # =========================================================================
     # SUMMARY & EXPORT

@@ -248,6 +248,353 @@ rows = db.execute(query, (user_id,)).fetchall()
 
 ---
 
+## Problem Set 9: Real-World Security Analysis (JLR Case Study)
+
+### Problem 9.1: Analyze Security Failures
+
+**Task:** Analyze Jaguar Land Rover's security failures using COSURVIVAL principles
+
+**Context:** JLR demonstrates what happens when security is treated as an IT problem rather than a business risk, and when foundational controls are ignored.
+
+**Requirements:**
+1. Identify JLR's security failures (TLS/SSL, DNS/DNSSEC, governance)
+2. Map each failure to COSURVIVAL principles that would prevent it
+3. Explain how COSURVIVAL's governance gate addresses these issues
+4. Generate recommendations based on the case study
+
+**Starter:**
+```python
+def analyze_jlr_failures() -> Dict[str, Any]:
+    """
+    Analyze JLR's security failures using COSURVIVAL principles.
+    
+    CURRICULUM: Week 10, Problem Set 9.1
+    """
+    # TODO: Identify JLR's failures
+    jlr_failures = {
+        "tls_ssl": {
+            "issue": "",  # TODO: Describe TLS/SSL failures
+            "impact": "",  # TODO: Describe impact
+            "cosurvival_solution": ""  # TODO: How does COSURVIVAL prevent this?
+        },
+        "dns_dnssec": {
+            "issue": "",  # TODO: Describe DNS/DNSSEC failures
+            "impact": "",  # TODO: Describe impact
+            "cosurvival_solution": ""  # TODO: How does COSURVIVAL prevent this?
+        },
+        "governance": {
+            "issue": "",  # TODO: Describe governance failures
+            "impact": "",  # TODO: Describe impact
+            "cosurvival_solution": ""  # TODO: How does COSURVIVAL prevent this?
+        }
+    }
+    
+    # TODO: Map to COSURVIVAL principles
+    cosurvival_principles = {
+        "security_by_design": {
+            "principle": "",  # TODO: Describe principle
+            "prevents": [],  # TODO: Which failures does this prevent?
+            "implementation": ""  # TODO: Where is this implemented?
+        }
+    }
+    
+    # TODO: Generate recommendations
+    recommendations = []
+    
+    return {
+        "jlr_failures": jlr_failures,
+        "cosurvival_principles": cosurvival_principles,
+        "recommendations": recommendations
+    }
+```
+
+---
+
+### Problem 9.2: Implement Foundational Controls
+
+**Task:** Implement the foundational controls that JLR missed
+
+**Requirements:**
+1. Implement TLS/SSL validation
+2. Implement DNS/DNSSEC validation
+3. Implement governance gate checks
+4. Test that controls prevent JLR-style failures
+
+**Starter:**
+```python
+def validate_tls_configuration(domain: str) -> Dict[str, Any]:
+    """
+    Validate TLS/SSL configuration.
+    
+    CURRICULUM: Week 10, Problem Set 9.2
+    Prevents JLR-style TLS/SSL failures.
+    """
+    # TODO: Check TLS version
+    # TODO: Check certificate validity
+    # TODO: Check cipher suites
+    # TODO: Return validation result
+    pass
+
+def validate_dns_dnssec(domain: str) -> Dict[str, Any]:
+    """
+    Validate DNS/DNSSEC configuration.
+    
+    CURRICULUM: Week 10, Problem Set 9.2
+    Prevents JLR-style DNS/DNSSEC failures.
+    """
+    # TODO: Check DNS configuration
+    # TODO: Check DNSSEC deployment
+    # TODO: Check DNS security
+    # TODO: Return validation result
+    pass
+
+def governance_gate_check(data: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Governance gate check before processing.
+    
+    CURRICULUM: Week 10, Problem Set 9.2
+    Prevents JLR-style governance failures.
+    """
+    # TODO: Check security controls
+    # TODO: Check foundational controls (TLS, DNS)
+    # TODO: Check business risk assessment
+    # TODO: Return gate result
+    pass
+```
+
+---
+
+### Problem 9.3: Security as Business Risk
+
+**Task:** Design a system that treats security as a business risk, not an IT problem
+
+**Requirements:**
+1. Design business risk assessment for security failures
+2. Integrate security into business decisions
+3. Calculate business impact of security failures
+4. Generate business risk reports
+
+**Starter:**
+```python
+def assess_business_risk(security_failure: str) -> Dict[str, Any]:
+    """
+    Assess business risk of security failure.
+    
+    CURRICULUM: Week 10, Problem Set 9.3
+    Treats security as business risk, not IT problem.
+    """
+    # TODO: Calculate operational impact
+    # TODO: Calculate supply chain impact
+    # TODO: Calculate economic impact
+    # TODO: Calculate trust/confidence impact
+    # TODO: Return business risk assessment
+    pass
+
+def integrate_security_into_business_decisions(
+    decision: Dict[str, Any]
+) -> Dict[str, Any]:
+    """
+    Integrate security into business decisions.
+    
+    CURRICULUM: Week 10, Problem Set 9.3
+    Prevents JLR-style isolation of security from business.
+    """
+    # TODO: Assess security impact of decision
+    # TODO: Assess business impact of security
+    # TODO: Generate integrated recommendation
+    # TODO: Return decision with security integration
+    pass
+```
+
+---
+
+### Problem 9.4: Proactive vs. Reactive Security
+
+**Task:** Implement proactive security governance that prevents incidents
+
+**Requirements:**
+1. Implement proactive security checks (before incidents)
+2. Compare proactive vs. reactive approaches
+3. Demonstrate how proactive governance prevents JLR-style failures
+4. Generate proactive security recommendations
+
+**Starter:**
+```python
+def proactive_security_check(data: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Proactive security check before processing.
+    
+    CURRICULUM: Week 10, Problem Set 9.4
+    Prevents incidents before they happen (unlike JLR's reactive approach).
+    """
+    # TODO: Check foundational controls
+    # TODO: Check security posture
+    # TODO: Check governance compliance
+    # TODO: Generate proactive recommendations
+    # TODO: Return proactive security assessment
+    pass
+
+def compare_proactive_vs_reactive(
+    incident: str
+) -> Dict[str, Any]:
+    """
+    Compare proactive vs. reactive security approaches.
+    
+    CURRICULUM: Week 10, Problem Set 9.4
+    Demonstrates why proactive governance prevents JLR-style failures.
+    """
+    # TODO: Analyze reactive approach (JLR-style)
+    # TODO: Analyze proactive approach (COSURVIVAL-style)
+    # TODO: Compare costs, impact, prevention
+    # TODO: Return comparison
+    pass
+```
+
+---
+
+## Problem Set 10: AI-Generated Code Security (A-SWE Case Study)
+
+### Problem 10.1: Analyze AI-Generated Code Security Risks
+
+**Task:** Analyze security risks of AI-generated code using A-SWE case study
+
+**Context:** OpenAI's A-SWE can build complete applications, manage PRs, conduct QA, and fix bugs automatically. This creates new security challenges.
+
+**Requirements:**
+1. Identify security risks of AI-generated code
+2. Analyze supply chain security concerns
+3. Design governance requirements for AI code
+4. Generate recommendations
+
+**Starter:**
+```python
+def analyze_ai_code_security_risks() -> Dict[str, Any]:
+    """
+    Analyze security risks of AI-generated code.
+    
+    CURRICULUM: Week 10, Problem Set 10.1
+    Based on A-SWE case study.
+    """
+    # TODO: Identify security risks
+    risks = {
+        "code_provenance": {
+            "risk": "",  # TODO: Describe risk
+            "impact": "",  # TODO: Describe impact
+            "mitigation": ""  # TODO: How to mitigate?
+        },
+        "supply_chain": {
+            "risk": "",  # TODO: Describe risk
+            "impact": "",  # TODO: Describe impact
+            "mitigation": ""  # TODO: How to mitigate?
+        },
+        "human_oversight": {
+            "risk": "",  # TODO: Describe risk
+            "impact": "",  # TODO: Describe impact
+            "mitigation": ""  # TODO: How to mitigate?
+        }
+    }
+    
+    # TODO: Design governance requirements
+    governance_requirements = []
+    
+    # TODO: Generate recommendations
+    recommendations = []
+    
+    return {
+        "risks": risks,
+        "governance_requirements": governance_requirements,
+        "recommendations": recommendations
+    }
+```
+
+---
+
+### Problem 10.2: Implement Governance Gate for AI Code
+
+**Task:** Implement governance gate checks for AI-generated code
+
+**Requirements:**
+1. Add AI code provenance tracking
+2. Require human review for AI code
+3. Add audit logging for AI decisions
+4. Integrate with existing governance gate
+
+**Starter:**
+```python
+def governance_gate_for_ai_code(ai_code: str, context: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Governance gate for AI-generated code.
+    
+    CURRICULUM: Week 10, Problem Set 10.2
+    AI code must pass same governance as human code, plus AI-specific checks.
+    """
+    # TODO: Standard governance checks (PII, bias, security)
+    standard_checks = {}
+    
+    # TODO: AI-specific checks (provenance, human review, audit logging)
+    ai_specific_checks = {
+        "provenance_tracked": False,  # TODO: Track AI origin
+        "human_review_required": True,  # TODO: Always require human review
+        "audit_logged": False  # TODO: Log AI decisions
+    }
+    
+    # TODO: Combine checks
+    all_checks_passed = False  # TODO: Implement
+    
+    return {
+        "standard_checks": standard_checks,
+        "ai_specific_checks": ai_specific_checks,
+        "all_passed": all_checks_passed,
+        "requires_human_approval": True  # Always true for AI code
+    }
+```
+
+---
+
+### Problem 10.3: Compare A-SWE vs. Shadow Student Mode
+
+**Task:** Compare A-SWE (replaces workflows) vs. SSM (guides learning)
+
+**Requirements:**
+1. Compare AI roles (advisor vs. authority)
+2. Analyze security implications of each approach
+3. Evaluate learning vs. dependency trade-offs
+4. Generate recommendations
+
+**Starter:**
+```python
+def compare_aswe_vs_ssm() -> Dict[str, Any]:
+    """
+    Compare A-SWE vs. Shadow Student Mode approaches.
+    
+    CURRICULUM: Week 10, Problem Set 10.3
+    """
+    # TODO: Compare approaches
+    comparison = {
+        "aswe": {
+            "ai_role": "",  # TODO: Describe A-SWE's AI role
+            "security_implications": "",  # TODO: Security concerns
+            "learning_impact": "",  # TODO: Does it build or replace skills?
+        },
+        "ssm": {
+            "ai_role": "",  # TODO: Describe SSM's AI role
+            "security_implications": "",  # TODO: Security concerns
+            "learning_impact": "",  # TODO: Does it build or replace skills?
+        }
+    }
+    
+    # TODO: Generate recommendations
+    recommendations = []
+    
+    return {
+        "comparison": comparison,
+        "recommendations": recommendations,
+        "key_insight": ""  # TODO: What's the key lesson?
+    }
+```
+
+---
+
 ## Submission Guidelines
 
 ### For Each Problem Set
@@ -266,6 +613,13 @@ After completing all problem sets, answer:
 3. Can you prevent XSS and CSRF?
 4. Can you implement access control?
 5. Can you encrypt sensitive data?
+6. Can you analyze real-world security failures (JLR case study)?
+7. Can you implement foundational controls (TLS, DNS, governance)?
+8. Can you treat security as a business risk, not an IT problem?
+9. Can you implement proactive security governance?
+10. Can you analyze AI-generated code security risks (A-SWE case study)?
+11. Can you implement governance gate for AI code?
+12. Can you compare AI as advisor vs. authority (A-SWE vs. SSM)?
 
 **Remember:** Growth over position. Compare to your Week 9 baseline.
 

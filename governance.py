@@ -12,6 +12,12 @@ This module ensures:
 5. Audit trails are maintained
 
 NOTHING proceeds without passing governance checks.
+
+**AI-Generated Code Governance:**
+AI-generated code (e.g., from A-SWE, Copilot, or other AI tools) must pass
+the same governance checks as human-written code, plus additional AI-specific
+checks: human review required, provenance tracking, audit logging.
+See: `curriculum/case_studies/A_SWE_ANALYSIS.md` for full analysis.
 """
 
 """
@@ -27,6 +33,12 @@ This module ensures:
 5. Audit trails are maintained
 
 NOTHING proceeds without passing governance checks.
+
+**AI-Generated Code Governance:**
+AI-generated code (e.g., from A-SWE, Copilot, or other AI tools) must pass
+the same governance checks as human-written code, plus additional AI-specific
+checks: human review required, provenance tracking, audit logging.
+See: `curriculum/case_studies/A_SWE_ANALYSIS.md` for full analysis.
 """
 
 # Standard library imports
@@ -346,6 +358,56 @@ BIAS_GUARDRAILS = {
         "warning": "Rankings reflect fit, not absolute quality",
         "context": "A provider may rank low for one use case but excel in another",
         "required_action": "Always include context and use-case specificity",
+    },
+}
+
+# =============================================================================
+# ANTI-PATTERN GOVERNANCE (Dirac-Inspired)
+# =============================================================================
+
+ANTI_PATTERN_GOVERNANCE = {
+    """
+    Governance rules for anti-pattern detection (Dirac-inspired).
+    
+    Like Dirac's negative energy solutions revealing antiparticles,
+    anti-patterns (gaps, absences, inverses) are valid insights, not nonsense.
+    
+    CURRICULUM: Week 0, Activity 0.5 - Negative Patterns Are Not Nonsense
+    Week 1, Activity 1.3 - Multi-Component Wave Functions
+    See: curriculum/vision/chapters/DIrac_ANTIPATTERNS_APPLICATION.md
+    """
+    "principle": "Anti-patterns are valid insights, not deficiencies",
+    "framing": "Gaps are opportunities, not failures",
+    "prohibited": [
+        "Framing gaps as individual shortcomings",
+        "Using anti-patterns for performance evaluation",
+        "Treating absences as negative judgments",
+        "Presenting anti-patterns without their complementary patterns",
+        "Using anti-patterns to rank or compare individuals",
+    ],
+    "required": [
+        "Frame gaps as growth opportunities",
+        "Present anti-patterns alongside positive patterns",
+        "Explain complementary nature of pattern-anti-pattern pairs",
+        "Show pattern-anti-pattern annihilation insights",
+        "Use nonjudgmental language (opportunities, not deficiencies)",
+    ],
+    "bias_guardrails": {
+        "gap_framing": {
+            "warning": "Gaps ≠ deficiencies",
+            "context": "Gaps represent opportunities, not failures",
+            "required_action": "Always frame as 'opportunity' or 'growth area', never as 'deficiency' or 'failure'",
+        },
+        "absence_interpretation": {
+            "warning": "Absences ≠ low value",
+            "context": "What's NOT happening can be as important as what IS happening",
+            "required_action": "Present absences as complementary insights, not negative judgments",
+        },
+        "anti_pattern_use": {
+            "warning": "Anti-patterns are analytical tools, not evaluation tools",
+            "context": "Anti-patterns reveal opportunities, not performance issues",
+            "required_action": "Never use anti-patterns for individual performance assessment",
+        },
     },
 }
 

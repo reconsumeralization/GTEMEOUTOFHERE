@@ -19,6 +19,11 @@ The Cosurvival AI Advisor is uniquely suited to connect dots across domains fast
 - **Support, not surveil**
 - **Transparent about why** - so we can trust without becoming dependent
 
+**Comparison to A-SWE (Agentic Software Engineer):**
+Unlike A-SWE which replaces entire workflows (builds apps, manages PRs, fixes bugs),
+COSURVIVAL's advisor guides human decision-making without replacing it. A-SWE is
+authority (replaces); COSURVIVAL is advisor (guides). See: `curriculum/case_studies/A_SWE_ANALYSIS.md`
+
 ---
 
 ## How This Is Implemented
